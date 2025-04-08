@@ -15,3 +15,4 @@ Jupyter notebook and resources for MCTA 4363 Deep Learning.
 5) Neural Network in Pytorch [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/05_Build_a_Neural_Network_With_Pytorch.ipynb)
    
 6) Train a FFNN [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/06_Train_a_FFNN_new.ipynb)
+7) Principles of Convolution [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)] (https://colab.research.google.com/08. Principles of the Convolution.ipynb)

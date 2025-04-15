@@ -23,3 +23,5 @@ Jupyter notebook and resources for MCTA 4363 Deep Learning.
 9) Convolution in practice [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/09.%20Convolution_in_practice.ipynb)
 
 10) Build a CNN [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/10.%20Build_a_CNN.ipynb)
+
+11) Batchnorm and dropout [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/11_Batch_Normalization_and_Dropout.ipynb) 

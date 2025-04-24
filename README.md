@@ -24,4 +24,8 @@ Jupyter notebook and resources for MCTA 4363 Deep Learning.
 
 10) Build a CNN [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/10.%20Build_a_CNN.ipynb)
 
-11) Batchnorm and dropout [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/11_Batch_Normalization_and_Dropout.ipynb) 
+11) Batchnorm and dropout [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/11_Batch_Normalization_and_Dropout.ipynb)
+
+12) Pretrained Models [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/12_Image_Classification_using_pre_trained_models.ipynb)
+
+13) Custom Dataset & Data Augmentation [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/13_Custom_Dataset_and_Data_Augmentation.ipynb)

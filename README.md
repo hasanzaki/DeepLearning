@@ -28,4 +28,4 @@ Jupyter notebook and resources for MCTA 4363 Deep Learning.
 
 12) Pretrained Models [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/12_Image_Classification_using_pre_trained_models.ipynb)
 
-13) Custom Dataset & Data Augmentation [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/13_Custom_Dataset_and_Data_Augmentation.ipynb)
+13) Custom Dataset & Data Augmentation [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/13.%20Custom_Dataset_and%20Data_Augmentation.ipynb)

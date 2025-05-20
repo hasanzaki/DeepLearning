@@ -31,3 +31,9 @@ Jupyter notebook and resources for MCTA 4363 Deep Learning.
 13) Transfer Learning [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/13.%20Transfer_Learning.ipynb)
 
 14) Custom Dataset & Data Augmentation [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/14.%20Custom_Dataset_and%20Data_Augmentation.ipynb)
+
+15) Autoencoders [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/15.%20Autoencoders.ipynb)
+
+16) VAE [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/16.%20VAE.ipynb)
+
+

@@ -36,5 +36,5 @@ Jupyter notebook and resources for MCTA 4363 Deep Learning.
 
 16) VAE [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/16.%20VAE.ipynb)
 
-17) GAN [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/16.%20VAE.ipynb)
+17) GAN [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hasanzaki/DeepLearning/blob/main/17.%20GAN_anime.ipynb)
 

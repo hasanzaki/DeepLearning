@@ -23,7 +23,7 @@ def read_classes():
 
 # --------- Setup ---------
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-model = models.resnet50(pretrained=True).to(device).eval()
+model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT).to(device).eval()
 categories = read_classes()
 transform = preprocess()
 

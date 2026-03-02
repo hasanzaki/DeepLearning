@@ -48,7 +48,5 @@ while True:
 
 
 capture.release()
-out.release()
-
 cv2.destroyAllWindows()
 

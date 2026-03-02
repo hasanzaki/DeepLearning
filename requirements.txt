@@ -1,0 +1,31 @@
+# Core deep learning
+torch>=2.6.0
+torchvision>=0.21.0
+torchaudio>=2.6.0
+
+# Computer vision
+opencv-python>=4.8.0
+Pillow>=10.0.0
+
+# Data & numerics
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Training utilities
+tqdm>=4.65.0
+
+# Model utilities
+torchinfo>=1.8.0
+torchviz>=0.0.2
+
+# Object detection (COCO evaluation)
+pycocotools>=2.0.7
+
+# Jupyter
+notebook>=7.0.0
+ipywidgets>=8.0.0

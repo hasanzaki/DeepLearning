@@ -36,7 +36,7 @@ def read_classes():
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 # Initialize the model.
 # model = torch.load("full_model.pth")
-model = models.resnet50(pretrained=True)
+model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
 model.eval()
 model.to(device)
 # Load the ImageNet class names.

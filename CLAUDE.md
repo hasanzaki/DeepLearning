@@ -64,19 +64,18 @@ This file governs all AI-assisted work on this repository. Read this before maki
 - [x] Remove duplicate `11_Batch_Normalization_and_Dropout.ipynb`
 - [x] Update all Colab badge URLs in README to point to feature branch
 
-### Phase 2 — Modernize Existing Notebooks 🔄 IN PROGRESS
-Notebooks to update: 02, 06, 10, 11, 12, 13, 14, 15, 16, 17
+### Phase 2 — Modernize Existing Notebooks ✅ DONE
+Notebooks updated: 02, 06, 10, 11, 12, 13, 14, 15, 16, 17
 
-Per-notebook changes planned:
-- **02**: Optimizer comparison plot (SGD vs Momentum vs Adam), 3D loss landscape, LR sensitivity
-- **06**: LR schedulers (StepLR, CosineAnnealingLR, OneCycleLR), gradient clipping, val curves
-- **10**: Feature map visualizations, Grad-CAM, receptive field explanation
-- **11**: BatchNorm distribution plots, Dropout train/eval demo, ResidualBlock diagram
-- **12**: Model comparison table, `timm` intro, feature extraction visualization
-- **13**: Feature extraction vs fine-tuning comparison, `timm` fine-tuning example
-- **14**: TorchVision transforms v2, `num_workers`+`pin_memory`, AutoAugment/RandAugment
-- **15 & 16**: Latent space interpolation, t-SNE visualization, VAE ELBO theory
-- **17**: GAN training stability tips, failure mode examples, FID score explanation
+- [x] **02**: Optimizer comparison plot (SGD vs Momentum vs Adam), 3D loss landscape, LR sensitivity
+- [x] **06**: LR schedulers (StepLR, CosineAnnealingLR, OneCycleLR), gradient clipping, val curves
+- [x] **10**: Feature map visualizations, Grad-CAM, receptive field explanation
+- [x] **11**: BatchNorm distribution plots, Dropout train/eval demo, ResidualBlock diagram
+- [x] **12**: Model comparison table, `timm` intro, feature extraction visualization
+- [x] **13**: Feature extraction vs fine-tuning comparison, `timm` fine-tuning example
+- [x] **14**: TorchVision transforms v2, `num_workers`+`pin_memory`, AutoAugment/RandAugment
+- [x] **15 & 16**: Latent space interpolation, t-SNE visualization, VAE ELBO theory
+- [x] **17**: GAN training stability tips, failure mode examples, FID score explanation
 
 ### Phase 3 — New Notebooks (Modern Topics) ✅ DONE
 - [x] 18_Mixed_Precision_and_torch_compile.ipynb — FP16/BF16, autocast, GradScaler, torch.compile benchmark
@@ -93,12 +92,16 @@ Per-notebook changes planned:
 - [x] Removed Pierian-Data copyright cell from 03_Basic-PyTorch-NN.ipynb
 - [x] Rewrote README.md as professional 25-notebook course index with part divisions
 
-### Phase 4 — Cross-Cutting Enhancements ⏳ PENDING
-- [ ] Theory block at top of every notebook
-- [ ] Architecture diagrams
-- [ ] "Common mistakes" callout boxes
-- [ ] "Further Reading" cells with paper links
-- [ ] Exercises section at end of every notebook
+### Phase 4 — Cross-Cutting Enhancements ✅ DONE
+- [x] Theory block added to NB01, NB04, NB05, NB09, NB24
+- [x] `torch.autograd` code demo + gradient flow visualization in NB04
+- [x] Worked solution added to NB05 (myModel exercise)
+- [x] Output size formula + feature map visualization in NB09
+- [x] Worked solutions added to NB08 (California Housing scaffold cells 5–7)
+- [x] NB24 (Faster R-CNN) fully modernized: self-contained training loop (no engine.py dependency), theory, dataset download instructions
+- [x] "Common Mistakes" callout tables added to NB01, NB04, NB05, NB09, NB24
+- [x] "Further Reading" cells added to NB01, NB04, NB05, NB09, NB24
+- [x] Exercises section (3–4 challenges) added to NB01, NB04, NB05, NB09, NB24
 
 ### Phase 5 — (TBD) ⏳ PENDING
 

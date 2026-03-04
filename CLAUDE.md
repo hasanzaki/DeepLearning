@@ -78,13 +78,20 @@ Per-notebook changes planned:
 - **15 & 16**: Latent space interpolation, t-SNE visualization, VAE ELBO theory
 - **17**: GAN training stability tips, failure mode examples, FID score explanation
 
-### Phase 3 — New Notebooks (Modern Topics) ⏳ PENDING
-- [ ] 18: Mixed Precision & torch.compile
-- [ ] 19: Vision Transformers (ViT)
-- [ ] 20: Experiment Tracking with W&B
-- [ ] 21: Modern Training Best Practices
-- [ ] 22: CLIP & Zero-Shot Learning
-- [ ] 23: Diffusion Models (Intro)
+### Phase 3 — New Notebooks (Modern Topics) ✅ DONE
+- [x] 18_Mixed_Precision_and_torch_compile.ipynb — FP16/BF16, autocast, GradScaler, torch.compile benchmark
+- [x] 19_Modern_Training_Best_Practices.ipynb — gradient accumulation, warmup+cosine, checkpointing, early stopping
+- [x] 20_Vision_Transformers_ViT.ipynb — patch embeddings, self-attention, attention maps, ViT fine-tuning
+- [x] 21_Diffusion_Models_Intro.ipynb — forward/reverse diffusion, DDPM, DDIM, HuggingFace Diffusers
+- [x] 22_CLIP_and_Zero_Shot_Learning.ipynb — contrastive pre-training, zero-shot CIFAR10, prompt engineering
+- [x] 24_Experiment_Tracking_WandB.ipynb — wandb.log, wandb.watch, hyperparameter sweeps
+
+### Course Restructuring (done alongside Phase 3)
+- [x] Deleted Custom_Dataset_and_Fine_Tuning.ipynb (redundant with NB13 + NB14)
+- [x] Removed webcam cells from NB12 (not Colab-compatible)
+- [x] Replaced Kaggle API cell in NB17 with HuggingFace Hub download
+- [x] Removed Pierian-Data copyright cell from 03_Basic-PyTorch-NN.ipynb
+- [x] Rewrote README.md as professional 25-notebook course index with part divisions
 
 ### Phase 4 — Cross-Cutting Enhancements ⏳ PENDING
 - [ ] Theory block at top of every notebook

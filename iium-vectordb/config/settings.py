@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv(Path(__file__).parent / ".env")
 
 # Google Drive
-GDRIVE_FOLDER_ID = os.getenv("GDRIVE_FOLDER_ID", "")
+GDRIVE_FOLDER_ID = os.getenv("GDRIVE_FOLDER_ID", "1bhSFr2roodPz0EvDZc8F_Sodj-ILZ4ri")
 GOOGLE_SERVICE_ACCOUNT_JSON = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON", "config/service_account.json")
 
 # OpenAI

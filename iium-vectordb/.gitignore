@@ -1,0 +1,19 @@
+# Secrets
+.env
+config/service_account.json
+
+# Vector DB data
+vectordb/chroma_db/
+
+# Downloaded raw docs
+ingestion/raw_docs/
+
+# Cached embeddings
+embeddings/cache/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/

@@ -13,6 +13,7 @@ import sys
 import json
 import logging
 from pathlib import Path
+from typing import Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config.settings import GDRIVE_FOLDER_ID, GOOGLE_SERVICE_ACCOUNT_JSON
@@ -81,7 +82,7 @@ def _list_files_in_folder(service, folder_id: str) -> list[dict]:
     return results
 
 
-def _download_file(service, file_meta: dict, dest_dir: Path) -> Path | None:
+def _download_file(service, file_meta: dict, dest_dir: Path) -> Optional[Path]:
     from googleapiclient.http import MediaIoBaseDownload
     import io
 
@@ -158,7 +159,7 @@ def download_public_folder(folder_id: str, dest_dir: Path) -> list[Path]:
 # Main entry point
 # ---------------------------------------------------------------------------
 
-def download(folder_id: str | None = None, dest_dir: Path | None = None) -> list[Path]:
+def download(folder_id: Optional[str] = None, dest_dir: Optional[Path] = None) -> list[Path]:
     folder_id = folder_id or GDRIVE_FOLDER_ID
     dest_dir = dest_dir or RAW_DOCS_DIR
 

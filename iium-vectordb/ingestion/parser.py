@@ -10,6 +10,7 @@ import logging
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -106,7 +107,7 @@ PARSERS = {
 }
 
 
-def parse_file(path: Path) -> ParsedDocument | None:
+def parse_file(path: Path) -> Optional[ParsedDocument]:
     ext = path.suffix.lower()
     parser = PARSERS.get(ext)
     if parser is None:

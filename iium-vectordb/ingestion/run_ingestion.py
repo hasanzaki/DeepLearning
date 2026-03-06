@@ -13,6 +13,7 @@ import argparse
 import logging
 import sys
 from pathlib import Path
+from typing import Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -29,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 def run(
     skip_download: bool = False,
-    folder_id: str | None = None,
+    folder_id: Optional[str] = None,
     output: Path = DEFAULT_OUTPUT,
 ) -> Path:
     folder_id = folder_id or GDRIVE_FOLDER_ID

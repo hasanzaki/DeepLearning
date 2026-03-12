@@ -1,0 +1,42 @@
+# Thesis-to-Book Conversion Configuration
+book:
+  title: "Advances in Deep Learning: Selected Doctoral Research"
+  subtitle: "A Compiled Academic Volume"
+  editors:
+    - "Dr. Jane Smith"
+    - "Prof. John Doe"
+  institution: "University of Excellence"
+  year: 2026
+  subject_area: "Deep Learning and Artificial Intelligence"
+
+theses:
+  - path: "examples/thesis1.pdf"
+    author: "Alice Johnson"
+    original_title: "Convolutional Neural Networks for Medical Image Segmentation"
+    chapter_title: "CNNs in Medical Image Segmentation"
+    chapter_number: 1
+  - path: "examples/thesis2.docx"
+    author: "Bob Williams"
+    original_title: "Transformer Architectures for Natural Language Understanding"
+    chapter_title: "Transformers and Language Understanding"
+    chapter_number: 2
+
+output:
+  path: "output/academic_book.docx"
+  include_toc: true
+  include_bibliography: true
+  include_index: true
+  include_abstracts: true
+
+ai:
+  model: "claude-opus-4-6"
+  # Controls how aggressively the AI rewrites the content
+  # "light"  — minimal edits, preserve original voice
+  # "medium" — restructure and improve academic clarity
+  # "heavy"  — full rewrite into unified book prose
+  rewrite_level: "medium"
+  # Provide a brief description of the book's intended audience and style
+  style_guide: >
+    The book targets graduate students and researchers in deep learning.
+    Chapters should be self-contained yet cohesive, using formal academic English.
+    Retain technical precision while improving readability and narrative flow.

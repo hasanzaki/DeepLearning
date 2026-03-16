@@ -554,93 +554,135 @@ def _ch5_intro(doc: Document) -> None:
 def _ch5_platform(doc: Document) -> None:
     doc.add_heading("Platform Configuration and Operational Context", level=3)
     add_rich_para(doc, (
-        "The Suraya Riptide is a 2.1-metre twin-hull USV developed by the Centre for Unmanned "
-        "Technologies (CUTe) at the International Islamic University Malaysia (IIUM) in "
-        "collaboration with Hidrokinetik Group. Commissioned in 2022, the Riptide is the most "
-        "compact member of the SURAYA family, designed specifically for manoeuvring in "
-        "constrained near-shore waters — harbours, river channels, and coastal inlets — where "
-        "its shallow draught and reduced cross-section offer operational advantages unavailable "
-        "to larger vessels. Despite its compact footprint, the Riptide's deck accommodates a "
-        "full multimodal sensor suite, an onboard computing unit, and communication hardware "
-        "sufficient for autonomous mission execution."
+        "The Suraya Riptide is a 1.33-metre trimaran USV developed at the Centre for Unmanned "
+        "Technologies (CUTe), International Islamic University Malaysia (IIUM). The trimaran "
+        "hull configuration — a central fiberglass hull flanked by two supplemental buoyancy "
+        "pontoons connected via aluminium cross-members — provides a stable sensor mounting "
+        "platform capable of operating in wave heights up to 0.5 m, characteristic of "
+        "Malaysian near-shore and inland waterway conditions. Despite its compact footprint, "
+        "the Riptide's deck accommodates a full multimodal sensor suite, the onboard "
+        "**NVIDIA Jetson Orin NX** computing unit, and all communication hardware required "
+        "for autonomous mission execution."
+    ))
+    add_rich_para(doc, (
+        "The Jetson Orin NX (16 GB LPDDR5 at 68.3 GB/s) provides up to 100 TOPS of AI "
+        "inference throughput through its 1,024-core Ampere GPU, with a power envelope of "
+        "10–25 W suitable for battery-constrained USV operation. This platform was selected "
+        "specifically to support real-time execution of the M-ACF Net perception pipeline — "
+        "including YOLOv8 inference, point cloud processing, deep-learning-based disparity "
+        "estimation, and confidence-weighted fusion — at operationally relevant frame rates "
+        "without active cooling."
     ))
     add_figure_placeholder(
         doc,
         "FIGURE 5.1",
-        "Photograph of the Suraya Riptide USV with sensor suite annotated. "
-        "Adapt from thesis platform photographs. Source: Authors.",
-        "Figure 5.1. The Suraya Riptide USV deployed at near-shore test site, "
-        "showing the integrated sensor suite comprising LiDAR, stereo camera, and "
-        "navigation sensor modules."
+        "Photograph of the Suraya Riptide trimaran USV with sensor suite annotated "
+        "(LiDAR, ZED 2i stereo camera, GNSS, INS). Adapt from thesis platform photographs. "
+        "Source: Authors.",
+        "Figure 5.1. The Suraya Riptide trimaran USV, showing the co-mounted Velodyne "
+        "HDL-32E LiDAR and Stereolabs ZED 2i stereo camera on the forward sensor mast, "
+        "alongside the navigation sensor cluster amidships."
     )
 
     doc.add_heading("Navigation and Perception Sensor Modules", level=3)
     add_rich_para(doc, (
-        "The Suraya Riptide integrates dedicated navigation sensors and multimodal perception "
-        "sensors within a common hardware architecture. Navigation sensors provide the vessel's "
-        "absolute position, heading, and inertial state; perception sensors furnish the raw "
-        "data from which environmental awareness is constructed."
+        "The Suraya Riptide integrates five sensor modules: three navigation sensors providing "
+        "the vessel's absolute state, and two perception sensors furnishing the multimodal "
+        "environmental data processed by M-ACF Net."
     ))
     add_rich_para(doc, (
-        "**Navigation sensors.** An RTK-GNSS receiver provides centimetre-level positional "
-        "accuracy under correction signal, supplying the global reference frame necessary for "
-        "georeferencing detected obstacles. A MEMS-based Inertial Measurement Unit (IMU) "
-        "contributes roll, pitch, and yaw estimates at high update rates — essential for "
-        "motion compensation in wave-affected environments. An electronic compass supplies "
-        "absolute heading referenced to magnetic north."
+        "**RTK-GNSS (M1G2 Portable Heading Solution).** The M1G2 provides real-time "
+        "kinematic-corrected position and heading fixes at 10 Hz, with horizontal accuracy "
+        "of ±(8 mm + 1 ppm) under RTK correction. Operating at 5 W from a 12 V supply, "
+        "the receiver supplies the georeferenced positional data used to project "
+        "obstacle estimates into the global navigation frame for mission planning."
     ))
     add_rich_para(doc, (
-        "**Perception sensors.** The primary perception modalities are a three-dimensional LiDAR "
-        "and a stereo camera. The LiDAR generates a 360° or forward-hemisphere point cloud at "
-        "high frame rates, providing precise radial range measurements independent of ambient "
-        "lighting conditions. The stereo camera furnishes synchronised RGB image pairs from "
-        "which dense disparity maps — and ultimately depth estimates — are computed via "
-        "deep-learning-based stereo matching. Together, these two modalities provide "
-        "complementary spatial and semantic information that M-ACF Net exploits through "
-        "mid-level fusion."
+        "**Inertial Navigation System (SBG Ellipse-E).** The Ellipse-E provides fused "
+        "roll/pitch accuracy of ±0.1°, heave estimation to 5 cm at 0.2 Hz, and a "
+        "2-minute static alignment time. Its high-rate inertial outputs are used for "
+        "motion compensation during point cloud and stereo frame processing, ensuring "
+        "that sensor-frame obstacle estimates remain accurate under wave-induced motion."
+    ))
+    add_rich_para(doc, (
+        "**Electronic Compass (KVH C100).** The C100 provides absolute heading at 20 Hz "
+        "with ±0.5° RMS accuracy and a ±40° operational tilt range, supplying the "
+        "magnetic heading reference used by the GNC coordinate transformation module."
+    ))
+    add_rich_para(doc, (
+        "**Stereo Camera (Stereolabs ZED 2i).** The ZED 2i captures synchronised stereo "
+        "image pairs at 4,416 × 1,242 pixels and 20 Hz, with a 65 mm stereo baseline "
+        "and a 90° × 60° field of view. Its integrated stereo matching firmware provides "
+        "dense depth maps at 1,280 × 720 resolution. In M-ACF Net, the ZED 2i supplies "
+        "both the RGB image stream for YOLOv8 object detection and the left–right image "
+        "pair from which deep-learning-based disparity estimation generates the "
+        "Pseudo-LiDAR representation used in mid-level fusion."
+    ))
+    add_rich_para(doc, (
+        "**LiDAR (Velodyne HDL-32E).** The HDL-32E fires 32 laser channels at a rotation "
+        "rate of 10 Hz, generating approximately 700,000 points per second across a "
+        "360° horizontal field of view. Range accuracy is ±2 cm at distances up to 50 m, "
+        "providing the high-precision spatial measurements that constitute the LiDAR "
+        "branch of the M-ACF Net fusion pipeline."
     ))
     add_word_table(
         doc,
-        "Table 5.1. Sensor suite of the Suraya Riptide USV.",
-        ["Sensor", "Type", "Key Specification", "Role"],
+        "Table 5.1. Sensor suite of the Suraya Riptide USV with key specifications.",
+        ["Module", "Model", "Key Specification", "Role in M-ACF Net"],
         [
-            ["LiDAR",         "3D rotating LiDAR",    "360° FoV, multi-channel, long-range",   "Spatial ranging, point cloud"],
-            ["Stereo Camera", "RGB stereo pair",       "High-resolution, wide FoV, 30 FPS",     "Visual detection, disparity"],
-            ["RTK-GNSS",      "GNSS receiver",         "Centimetre-level accuracy",             "Absolute positioning"],
-            ["IMU",           "MEMS inertial unit",    "High-rate roll/pitch/yaw",              "Motion compensation"],
-            ["Compass",       "Electronic compass",    "Absolute heading, NMEA output",         "Heading reference"],
+            ["Computing",      "NVIDIA Jetson Orin NX 16 GB",    "1024-core Ampere GPU; 100 TOPS; 10–25 W",    "Real-time inference host"],
+            ["LiDAR",          "Velodyne HDL-32E",               "32 ch; 10 Hz; ±2 cm @ 50 m; ~700k pts/s",   "Geometric feature branch"],
+            ["Stereo Camera",  "Stereolabs ZED 2i",              "4416×1242 @ 20 Hz; 65 mm baseline; 90°×60° FoV", "Visual/depth feature branch"],
+            ["RTK-GNSS",       "M1G2 Portable Heading Solution", "10 Hz; ±(8 mm + 1 ppm) RTK; 5 W",           "Global georeferencing"],
+            ["INS",            "SBG Ellipse-E",                  "±0.1° roll/pitch; 5 cm heave; 2 min align",  "Motion compensation"],
+            ["Compass",        "KVH C100",                       "±0.5° RMS; 20 Hz; ±40° tilt range",          "Heading reference"],
         ]
     )
 
     doc.add_heading("Sensor Placement, Calibration, and Synchronisation", level=3)
     add_rich_para(doc, (
-        "Sensor placement on the Riptide was designed to maximise forward-hemisphere overlap "
-        "between the LiDAR and stereo camera while minimising mutual occlusion and "
-        "vibration-induced misalignment. The stereo camera was positioned at a forward-facing "
-        "elevated mount above the vessel's bow, providing an unobstructed view of the forward "
-        "operational zone. The LiDAR was mounted centrally on the deck at a height sufficient "
-        "to avoid self-occlusion by the hull while maintaining a useful elevation angle for "
-        "detecting near-surface obstacles."
+        "All navigational sensors (GNSS, INS, compass) are positioned along the hull's "
+        "centreline, close to the vessel's centre of gravity, to minimise the lever-arm "
+        "corrections required for accurate dynamic measurements. The perception sensors "
+        "— LiDAR and stereo camera — are co-mounted on a rigid steel mast at the vessel's "
+        "bow to maximise forward-hemisphere overlap and minimise mutual occlusion. "
+        "Table 5.2 records the measured translation offsets of each sensor frame "
+        "relative to the vessel body frame origin (F_base), with all axes aligned to "
+        "the vessel centreline (yaw = pitch = roll = 0° for all sensors)."
     ))
+    add_word_table(
+        doc,
+        "Table 5.2. Sensor coordinate frame translation offsets relative to the vessel "
+        "body frame origin (metres; yaw = pitch = roll = 0° for all sensors).",
+        ["Sensor Frame", "p_x (m)", "p_y (m)", "p_z (m)"],
+        [
+            ["F_GNSS",    "0",  "0.38", "−0.09"],
+            ["F_INS",     "0", "−0.30",  "0.06"],
+            ["F_LiDAR",   "0",  "0.66",  "0.43"],
+            ["F_Camera",  "0",  "0.66",  "0.26"],
+            ["F_Compass", "0",  "0.66", "−0.09"],
+        ]
+    )
     add_rich_para(doc, (
-        "**Intrinsic calibration** of the stereo camera was performed using a standard "
-        "checkerboard procedure to determine the focal length, principal point, and lens "
-        "distortion coefficients of each camera independently. **Extrinsic calibration** "
-        "established the rigid-body transformation (rotation matrix **R** and translation "
-        "vector **t**) between the LiDAR coordinate frame and the stereo camera coordinate "
-        "frame. Temporal synchronisation between the LiDAR and camera data streams was "
-        "achieved via hardware trigger signals, ensuring that point cloud and image frames "
-        "used in the fusion pipeline were temporally co-registered to within the sensor "
-        "measurement period."
+        "The LiDAR and stereo camera are co-mounted at forward offset p_y = 0.66 m, "
+        "with the LiDAR positioned 0.17 m above the stereo camera (p_z = 0.43 m vs. "
+        "0.26 m). This close co-location minimises the translational parallax between "
+        "the two sensor frames, reducing extrinsic calibration error. Extrinsic "
+        "calibration between the LiDAR and camera frames was performed using a "
+        "reflective checkerboard target visible in both sensor modalities, achieving "
+        "translational discrepancies under 2 cm and rotational error below 0.5°. "
+        "Temporal co-registration between the 10 Hz LiDAR scan and the 20 Hz stereo "
+        "frame was enforced via a hardware PPS (pulse-per-second) signal from the "
+        "GNSS receiver, providing synchronisation accuracy within ±2 ms."
     ))
     add_figure_placeholder(
         doc,
         "FIGURE 5.2",
-        "Schematic showing sensor coordinate frames and extrinsic calibration geometry "
-        "(LiDAR frame, camera frame, vessel body frame). Adapt from thesis calibration diagrams. "
-        "Source: Authors.",
-        "Figure 5.2. Sensor coordinate frame definitions and extrinsic calibration geometry "
-        "for the Suraya Riptide multimodal sensor suite."
+        "Schematic of sensor coordinate frames (F_LiDAR, F_Camera, F_GNSS, F_INS) "
+        "relative to vessel body frame F_base, with translation offsets annotated. "
+        "Adapt from thesis Figure 3.4.1. Source: Authors.",
+        "Figure 5.2. Sensor coordinate frame layout on the Suraya Riptide, illustrating "
+        "translation offsets from the vessel body frame origin for each sensor module."
     )
 
 
@@ -723,80 +765,126 @@ def _ch5_architecture(doc: Document) -> None:
 def _ch5_visual(doc: Document) -> None:
     doc.add_heading("Object Detection Model Selection and Training", level=3)
     add_rich_para(doc, (
-        "YOLOv8 was selected as the visual object detection backbone for M-ACF Net following "
-        "comparative evaluation against prior-generation architectures. The selection criteria "
-        "prioritised: (i) inference throughput compatible with real-time USV operation; "
-        "(ii) detection accuracy on maritime obstacle classes (vessels, buoys, persons, "
-        "floating debris); and (iii) model size suitable for onboard edge hardware. "
-        "YOLOv8's anchor-free detection head, improved neck architecture, and stronger "
-        "augmentation pipeline collectively offer measurable accuracy gains over YOLOv5 "
-        "at comparable inference cost."
+        "Five variants of YOLOv8 — Nano (YOLOv8n), Small (YOLOv8s), Medium (YOLOv8m), "
+        "Large (YOLOv8l), and Extra-large (YOLOv8x) — were evaluated alongside a "
+        "Faster R-CNN X101-FPN two-stage detector as baseline. Selection criteria "
+        "prioritised: (i) inference throughput on the NVIDIA Jetson Orin NX sufficient "
+        "for real-time operation; (ii) detection accuracy on the maritime obstacle "
+        "classes relevant to USV collision avoidance; and (iii) cross-domain robustness "
+        "to avoid performance collapse when tested in environments different from the "
+        "training distribution."
     ))
     add_rich_para(doc, (
-        "The model was fine-tuned on a curated maritime training corpus comprising images "
-        "from the Singapore Maritime Dataset (SMD), the SeaShips dataset, and a custom "
-        "multi-environment maritime dataset collected from real-world deployments aboard "
-        "the Suraya Riptide. Training employed a 640 × 640 input resolution, 100 epochs, "
-        "batch size 16, cosine learning rate schedule with initial learning rate 10^−3, "
-        "and standard YOLOv8 augmentation (random flips, mosaic, colour jitter, "
-        "and scale augmentation). Weights were initialised from COCO-pretrained checkpoints "
-        "and fine-tuned on the maritime data to adapt the detector to the specific "
-        "viewpoint geometry and object appearance of near-shore USV operation."
+        "Training data were drawn from two established maritime benchmark datasets. "
+        "The **SeaShips** dataset comprises 7,080 annotated instances across six "
+        "vessel categories: bulk cargo carrier (19.85%), ore carrier (21.24%), "
+        "fishing boat (28.05%), container ship (10.48%), general cargo ship (14.73%), "
+        "and passenger ship (5.63%). The **Singapore Maritime Dataset (SMD)** provides "
+        "48,317 instances across nine categories, including boat, buoy, ferry, kayak, "
+        "speed boat, sailboat, vessel/ship (71.60% of instances), and other. "
+        "All annotations were standardised to a unified 'sea_obstacle' class "
+        "(class ID = 0) to focus detection performance on obstacle presence and "
+        "localisation independent of vessel-type classification, which is handled "
+        "at the comprehension layer of the GNC system."
     ))
+    add_rich_para(doc, (
+        "Training employed data augmentation (random scaling, cropping, and lighting "
+        "variations) to enhance model robustness to the diverse illumination and "
+        "viewpoint conditions encountered in near-shore USV deployments. Batch size "
+        "and input resolution were tuned per variant to the memory constraints of "
+        "the Jetson Orin NX. Optimisation targeted precision–recall balance, with "
+        "model selection guided by mAP@0.5 on held-out validation splits of each "
+        "benchmark dataset."
+    ))
+    add_rich_para(doc, (
+        "**Intra-domain performance.** The domain-specific best models — YOLOv8x for "
+        "SMD and YOLOv8m for SeaShips — achieved strong in-domain detection accuracy "
+        "as shown in Table 5.3. The SMD-trained YOLOv8x reached mAP@0.5 = 0.988 "
+        "(precision 0.983, recall 0.961), whilst the SeaShip-trained YOLOv8m "
+        "achieved mAP@0.5 = 0.954 (precision 0.913, recall 0.889). However, "
+        "cross-domain evaluation revealed significant performance degradation: applying "
+        "YOLOv8x trained on SMD to the SeaShips test set reduced mAP@0.5 to 0.446 "
+        "(a 54.9% drop), whilst the YOLOv8m SeaShips model applied to SMD yielded "
+        "mAP@0.5 = 0.144 (an 84.9% drop). This cross-domain brittleness motivates "
+        "the multi-environment dataset collection described in Section 5.8 and "
+        "the confidence-weighted fusion strategy, which inherently reduces dependence "
+        "on any single-modality detection pathway."
+    ))
+    add_word_table(
+        doc,
+        "Table 5.3. YOLOv8 intra-domain detection performance on SMD and SeaShips "
+        "validation sets (unified 'sea_obstacle' class).",
+        ["Model", "Dataset", "Precision", "Recall", "mAP@0.5", "mAP@0.5:0.95"],
+        [
+            ["YOLOv8x", "SMD",      "0.983", "0.961", "0.988", "0.839"],
+            ["YOLOv8m", "SeaShips", "0.913", "0.889", "0.954", "0.686"],
+        ]
+    )
 
     doc.add_heading("Stereo Vision Depth Estimation and Occlusion Handling", level=3)
     add_rich_para(doc, (
-        "Dense depth estimation from stereo image pairs is performed using a deep-learning-based "
-        "disparity network, which computes per-pixel disparity maps from which metric depth "
-        "is recovered via the standard stereo triangulation relation:"
+        "Dense depth estimation is performed via a deep-learning-based cost-volume "
+        "disparity network. For each pixel (x, y), a cost volume C(x, y, d) is "
+        "constructed by summing squared photometric differences over a neighbourhood N "
+        "of the candidate disparity d:"
     ))
-    add_equation(doc, r"Z = \frac{f \cdot B}{d} \tag{5.3}")
+    add_equation(doc, r"C(x,y,d) = \sum_{k \in N} \left(I_L(x+k,y) - I_R(x-d+k,y)\right)^2 \tag{5.3}")
     add_rich_para(doc, (
-        "where Z is the scene depth, f is the camera focal length in pixels, B is the "
-        "stereo baseline (distance between left and right camera optical centres), and "
-        "d is the computed disparity (horizontal pixel shift between corresponding "
-        "points in the stereo image pair). The use of a learned disparity estimator — "
-        "rather than classical block-matching approaches such as SGBM — yields dense, "
-        "smoother disparity maps particularly in regions with low texture or repetitive "
-        "patterns characteristic of open water and vessel surfaces."
+        "The disparity map is then recovered from the cost volume via a soft-argmin "
+        "operation that produces a sub-pixel-accurate, differentiable disparity estimate:"
     ))
+    add_equation(doc, r"D(x,y) = \sum_d d \cdot \mathrm{softmax}\bigl(-C(x,y,d)\bigr) \tag{5.4}")
     add_rich_para(doc, (
-        "A persistent challenge in near-shore stereo depth estimation is **stereo occlusion**: "
-        "regions visible in one camera but not the other due to parallax, particularly "
-        "near object boundaries and at the water surface. M-ACF Net incorporates an "
-        "occlusion handling module that identifies unreliable disparity estimates through "
-        "left-right consistency checking and assigns reduced confidence weights to "
-        "depth estimates in occluded regions. This prevents erroneous depth values "
-        "from corrupting the downstream fusion and clustering stages."
+        "Metric depth Z is recovered from disparity d using the ZED 2i's calibrated "
+        "focal length f and its fixed 65 mm stereo baseline B:"
     ))
+    add_equation(doc, r"Z = \frac{f \cdot B}{d} \tag{5.5}")
+    add_rich_para(doc, (
+        "**Stereo occlusion handling.** Regions visible in only one camera — common at "
+        "obstacle boundaries and water-surface interfaces — produce unreliable disparity "
+        "estimates. M-ACF Net identifies occluded pixels via left–right consistency "
+        "checking and fills them using an inverse-distance-weighted interpolation from "
+        "neighbouring valid depth estimates:"
+    ))
+    add_equation(doc, r"d_{\mathrm{interpolated}} = \frac{\sum_i w_i \cdot d_i}{\sum_i w_i} \tag{5.6}")
+    add_rich_para(doc, (
+        "The stereo recovery efficiency η — the fraction of originally occluded pixels "
+        "successfully recovered by interpolation — is monitored per frame and "
+        "contributes to the stereo confidence score C_stereo used in the fusion stage "
+        "(Section 5.6):"
+    ))
+    add_equation(doc, r"\eta = \frac{N_{\mathrm{recovered}}}{N_{\mathrm{occluded}}} \times 100\% \tag{5.7}")
     add_figure_placeholder(
         doc,
         "FIGURE 5.4",
-        "Side-by-side comparison of stereo images (left/right pair), raw disparity map, "
-        "and refined disparity after occlusion handling under different wave conditions. "
-        "Source: Authors.",
-        "Figure 5.4. Stereo disparity estimation output: (a) left RGB input; "
-        "(b) raw disparity map; (c) refined disparity map after occlusion handling, "
-        "illustrating improved reliability at water-surface boundaries."
+        "Side-by-side comparison: left RGB image, raw disparity map (with occluded "
+        "regions visible as holes), and recovered disparity after weighted interpolation, "
+        "across calm and wave-disturbed water conditions. Source: Authors.",
+        "Figure 5.4. Stereo disparity estimation and occlusion recovery: (a) left RGB "
+        "input; (b) raw disparity map with occluded regions; (c) interpolation-recovered "
+        "disparity map used for Pseudo-LiDAR generation."
     )
 
     doc.add_heading("Pseudo-LiDAR Generation from Disparity Maps", level=3)
     add_rich_para(doc, (
-        "Pseudo-LiDAR transforms dense depth maps derived from stereo vision into a "
-        "3D point cloud representation geometrically equivalent to a direct LiDAR "
-        "measurement, enabling downstream processing modules originally designed for "
-        "LiDAR input to operate on stereo-derived depth data with minimal architectural "
-        "modification. For each pixel (u, v) in the depth map, the corresponding "
-        "3D point in the camera coordinate frame is recovered as:"
+        "The recovered depth map is converted into a Pseudo-LiDAR point cloud — a 3D "
+        "point representation geometrically equivalent to a direct LiDAR measurement "
+        "from the camera viewpoint. Each pixel (u, v) in the depth image is unprojected "
+        "into 3D camera-frame coordinates using the camera intrinsic matrix K:"
     ))
-    add_equation(doc, r"\mathbf{p}_{C} = Z \cdot \mathbf{K}^{-1} \begin{pmatrix} u \\ v \\ 1 \end{pmatrix} \tag{5.4}")
+    add_equation(doc, r"\begin{pmatrix} X \\ Y \\ Z \end{pmatrix} = Z \cdot \mathbf{K}^{-1} \begin{pmatrix} u \\ v \\ 1 \end{pmatrix} \tag{5.8}")
     add_rich_para(doc, (
-        "The resulting Pseudo-LiDAR cloud is filtered to the same spatial extent as the "
-        "real LiDAR point cloud (field-of-view clipping, range gating) before being fed "
-        "into the mid-level fusion stage alongside the real LiDAR geometric features. "
-        "This design choice allows M-ACF Net to exploit the complementary spatial "
-        "resolution of stereo depth — dense in the near field, increasingly sparse at "
-        "range — against the more uniform spatial sampling of the physical LiDAR sensor."
+        "equivalently expressed in terms of the camera's focal lengths (f_x, f_y) "
+        "and principal point (c_x, c_y) as:"
+    ))
+    add_equation(doc, r"X = \frac{Z(u - c_x)}{f_x}, \quad Y = \frac{Z(v - c_y)}{f_y} \tag{5.9}")
+    add_rich_para(doc, (
+        "The Pseudo-LiDAR cloud is clipped to the same field-of-view and range bounds "
+        "as the physical LiDAR, and voxel-downsampled to a comparable point density "
+        "before entering the mid-level fusion stage. This representation allows the "
+        "fusion module to operate on two geometrically compatible 3D feature sets — "
+        "real LiDAR and stereo-derived Pseudo-LiDAR — enabling richer spatial "
+        "correspondence than possible with raw image–point cloud pairings."
     ))
 
 
@@ -809,19 +897,22 @@ def _ch5_lidar(doc: Document) -> None:
 
     doc.add_heading("Downsampling, Noise Removal, and FOV Filtering", level=3)
     add_rich_para(doc, (
-        "**Voxel downsampling** replaces all points within each voxel cell of side length "
-        "0.1 m with a single centroid point, reducing cloud density while preserving "
-        "geometric structure relevant to the obstacle scales encountered in maritime "
-        "navigation (vessels: 1–10 m; buoys: 0.2–0.5 m; persons: 0.4–0.5 m width)."
+        "**Voxel downsampling** replaces all points within each voxel cell of side "
+        "length **0.2 m** with a single centroid point. This voxel size was selected "
+        "through empirical optimisation as the configuration that achieved the best "
+        "balance between cloud density and processing speed, producing an 8.0% "
+        "reduction in point count whilst preserving the geometric structure of "
+        "maritime obstacles at the relevant detection scales."
     ))
     add_rich_para(doc, (
         "**Statistical outlier removal (SOR)** identifies and discards points whose "
         "mean distance to their k nearest neighbours deviates substantially from the "
-        "global neighbourhood mean, eliminating isolated returns caused by sensor noise, "
-        "water surface spray, and airborne particles. The SOR parameters (k = 50 "
-        "neighbours, standard deviation multiplier σ = 1.0) were tuned empirically "
-        "across multiple near-shore environments to achieve an effective balance between "
-        "noise suppression and retention of sparse but meaningful obstacle returns."
+        "global neighbourhood mean. The SOR threshold parameter k = 1.5 standard "
+        "deviations was identified as optimal through F1-score analysis across multiple "
+        "near-shore environments: the preprocessing configuration (voxel = 0.2 m, "
+        "k = 1.5) achieved an F1-score of **0.85** on the evaluation dataset, "
+        "reflecting an effective balance between noise elimination and retention of "
+        "sparse but meaningful obstacle returns from buoys and distant vessels."
     ))
     add_rich_para(doc, (
         "**Field-of-view (FOV) filtering** restricts the processed cloud to the "
@@ -860,48 +951,59 @@ def _ch5_fusion(doc: Document) -> None:
 
     doc.add_heading("Fusion Strategy and Confidence Modelling", level=3)
     add_rich_para(doc, (
-        "For each spatial location in the shared fusion grid, M-ACF Net computes a "
-        "per-modality **confidence score** that quantifies the reliability of each "
-        "sensor's contribution at that location in the current frame. The LiDAR confidence "
-        "C_L at position **p** is derived from local point cloud density: regions with "
-        "high point density yield reliable geometric features (high C_L), whilst sparse "
-        "regions — common for small targets or at long ranges — yield low C_L. "
-        "The stereo confidence C_S at **p** is derived from the disparity consistency "
-        "score computed by the left-right consistency check: high consistency implies "
-        "reliable depth (high C_S), whilst low consistency (as in occluded regions or "
-        "specular water surfaces) implies low reliability."
+        "M-ACF Net computes per-frame, per-modality confidence scores that quantify "
+        "the reliability of each sensor's feature contribution. The **LiDAR confidence** "
+        "C_LiDAR is derived from the ratio of valid filtered points to total raw points "
+        "in the current scan — a proxy for point cloud density and data quality:"
+    ))
+    add_equation(doc, r"C_{\mathrm{LiDAR}} = \frac{N_{\mathrm{filtered}}}{N_{\mathrm{raw}}} \tag{5.10}")
+    add_rich_para(doc, (
+        "High C_LiDAR (dense, well-filtered cloud) indicates reliable LiDAR geometry; "
+        "low C_LiDAR (sparse cloud, as occurs with small or low-reflectance targets "
+        "at range) signals degraded feature quality. The **stereo confidence** C_stereo "
+        "is derived from the fraction of non-occluded pixels identified by the "
+        "left-right consistency check (Section 5.4.2):"
+    ))
+    add_equation(doc, r"C_{\mathrm{stereo}} = 1 - \frac{N_{\mathrm{occ}}}{N_{\mathrm{total}}} \tag{5.11}")
+    add_rich_para(doc, (
+        "where N_occ is the number of pixels flagged as occluded or unreliable, and "
+        "N_total is the total pixel count per frame. C_stereo approaches 1.0 in "
+        "well-lit, low-occlusion conditions (high stereo reliability) and drops "
+        "towards 0 under specular water reflections, fog, or heavy wave-induced occlusion."
     ))
 
     doc.add_heading("Dynamic Adaptive Weighting Mechanism", level=3)
     add_rich_para(doc, (
-        "The fused feature F_fused at each spatial location is computed as a "
-        "confidence-weighted combination of the LiDAR feature F_L and the "
-        "stereo-derived feature F_S:"
+        "The adaptive weighting factor α is computed from the per-frame confidence scores:"
     ))
-    add_equation(doc, r"F_{\mathrm{fused}} = w_L \cdot F_L + w_S \cdot F_S \tag{5.5}")
+    add_equation(doc, r"\alpha = \frac{C_{\mathrm{LiDAR}}}{C_{\mathrm{LiDAR}} + C_{\mathrm{stereo}}} \tag{5.12}")
     add_rich_para(doc, (
-        "where the normalised adaptive weights w_L and w_S are derived from the "
-        "confidence scores:"
+        "The fused feature representation is then formed as a confidence-weighted "
+        "combination of the LiDAR and stereo feature branches:"
     ))
-    add_equation(doc, r"w_L = \frac{C_L}{C_L + C_S}, \quad w_S = \frac{C_S}{C_L + C_S} \tag{5.6}")
+    add_equation(doc, r"F_{\mathrm{fused}} = \alpha \cdot F_{\mathrm{LiDAR}} \oplus (1 - \alpha) \cdot F_{\mathrm{stereo}} \tag{5.13}")
     add_rich_para(doc, (
-        "This formulation ensures that (i) w_L + w_S = 1 at every spatial location, "
-        "(ii) the sensor with higher confidence dominates the fused representation, "
-        "and (iii) the mechanism degrades gracefully: if one sensor's confidence drops "
-        "to zero (e.g., LiDAR point sparsity in a region), the fused representation "
-        "falls back entirely on the other modality's features. This adaptive behaviour "
-        "is the key advantage of M-ACF Net over fixed-weight or concatenation-based "
-        "mid-level fusion approaches."
+        "where ⊕ denotes element-wise feature combination in the shared spatial "
+        "representation. By construction, α + (1 − α) = 1, ensuring normalised "
+        "feature contributions at every spatial location. Empirical analysis of "
+        "per-frame α distributions across diverse maritime conditions confirmed that "
+        "LiDAR is typically prioritised (α ≥ 0.6) owing to its resilience to lighting "
+        "variations and specular water reflections. Stereo vision contributes more "
+        "significantly only in close-range, well-lit scenarios (α < 0.5), where its "
+        "higher pixel density enhances depth precision in the near field. The fused "
+        "3D obstacle position is then computed by back-projecting the fused depth "
+        "estimate into metric space:"
     ))
+    add_equation(doc, r"\begin{pmatrix} X \\ Y \end{pmatrix} = F_{\mathrm{fused}} \cdot \begin{pmatrix} (u - c_x)/f_x \\ (v - c_y)/f_y \end{pmatrix} \tag{5.14}")
     add_figure_placeholder(
         doc,
         "FIGURE 5.5",
-        "Visualisation of confidence weight maps: LiDAR confidence (C_L), stereo "
-        "confidence (C_S), and resulting adaptive weights (w_L, w_S) for a representative "
-        "near-shore frame. Source: Authors.",
-        "Figure 5.5. Adaptive confidence weight maps for a representative frame: "
-        "(a) LiDAR confidence C_L; (b) stereo confidence C_S; (c) resulting fused "
-        "feature weighting, illustrating dynamic modality selection across the scene."
+        "Visualisation of per-frame confidence scores C_LiDAR and C_stereo and the "
+        "resulting alpha weights across a sequence of frames with varying conditions "
+        "(calm, choppy, rainy, foggy). Source: Authors.",
+        "Figure 5.5. M-ACF Net adaptive confidence weighting across maritime conditions: "
+        "(a) LiDAR confidence C_LiDAR; (b) stereo confidence C_stereo; (c) resulting "
+        "α values demonstrating LiDAR priority (α ≥ 0.6) in most conditions."
     )
 
 
@@ -918,47 +1020,65 @@ def _ch5_clustering(doc: Document) -> None:
 
     doc.add_heading("Principal Component Analysis for Orientation Alignment", level=3)
     add_rich_para(doc, (
-        "Before clustering, the fused point cloud is partitioned into overlapping local "
-        "regions, and PCA is applied to each region's covariance matrix:"
+        "The PCA–K-Means algorithm (Algorithm 5.1) operates on the full fused point "
+        "cloud. PCA first computes the mean vector μ of all N points:"
     ))
-    add_equation(doc, r"\mathbf{C} = \frac{1}{N}\sum_{i=1}^{N}(\mathbf{p}_i - \bar{\mathbf{p}})(\mathbf{p}_i - \bar{\mathbf{p}})^T \tag{5.7}")
+    add_equation(doc, r"\mathbf{\mu} = \frac{1}{N}\sum_{i=1}^{N}\mathbf{p}_i \tag{5.15}")
     add_rich_para(doc, (
-        "The eigenvectors of **C** define the principal axes of the local point "
-        "distribution — effectively the dominant orientation of the obstacle's surface "
-        "geometry. The point cloud region is then rotated into the PCA-aligned "
-        "coordinate frame, in which K-Means clustering operates along physically "
-        "meaningful axes aligned with the obstacle's principal dimensions rather "
-        "than arbitrary Cartesian directions."
+        "The centred covariance matrix Σ is then computed from the mean-subtracted data:"
+    ))
+    add_equation(doc, r"\mathbf{\Sigma} = \frac{1}{N-1}\,\mathbf{P}_c^T\,\mathbf{P}_c \tag{5.16}")
+    add_rich_para(doc, (
+        "where P_c is the N × 3 matrix of centred point coordinates "
+        "(P_c = point_cloud − μ). Eigendecomposition of Σ yields eigenvectors "
+        "(principal components) and eigenvalues:"
+    ))
+    add_equation(doc, r"\mathbf{\Sigma}\,\mathbf{v} = \lambda\,\mathbf{v} \tag{5.17}")
+    add_rich_para(doc, (
+        "Eigenvectors are sorted in descending order of eigenvalue — placing the "
+        "direction of maximum point cloud variance (the obstacle's principal axis) "
+        "first. The full point cloud is projected into the PCA-aligned frame:"
+    ))
+    add_equation(doc, r"\mathbf{P}_{\mathrm{PCA}} = \mathbf{P}_c \cdot \mathbf{V}_{\mathrm{sorted}} \tag{5.18}")
+    add_rich_para(doc, (
+        "where V_sorted is the matrix of sorted eigenvectors. In this transformed "
+        "space, the first dimension aligns with the obstacle's principal axis (e.g. "
+        "the long axis of a vessel), enabling K-Means to cluster along physically "
+        "meaningful directions rather than arbitrary Cartesian axes."
     ))
 
     doc.add_heading("K-Means Clustering in Transformed Space", level=3)
     add_rich_para(doc, (
-        "K-Means clustering is applied in the PCA-transformed space to partition "
-        "the aligned points into K obstacle clusters. The number of clusters K is "
-        "determined adaptively per scene using the elbow method applied to the "
-        "within-cluster sum-of-squares (WCSS) criterion, allowing the algorithm to "
-        "separate densely packed but geometrically distinct obstacles without "
-        "requiring a fixed cluster count to be specified in advance."
+        "K-Means is applied to P_PCA, minimising the within-cluster sum-of-squares "
+        "objective J:"
     ))
+    add_equation(doc, r"J = \sum_{i=1}^{k}\sum_{j=1}^{n_i}\left\|\mathbf{x}_j^{(i)} - \mathbf{\mu}_i\right\|^2 \tag{5.19}")
     add_rich_para(doc, (
-        "Each resulting cluster is characterised by its centroid position, "
-        "principal axis orientations (retained from the PCA stage), and "
-        "the spatial extent of its member points. Clusters with fewer than a "
-        "minimum point count threshold are discarded as noise. The remaining "
-        "clusters constitute the obstacle candidates forwarded to the GNC system."
+        "K is determined adaptively from the variance captured by the first principal "
+        "component — scenes in which the dominant axis explains a large fraction of "
+        "total variance are assigned k = 1 (a single elongated obstacle), whilst "
+        "scenes with more distributed variance receive higher k. Clustering iterates "
+        "until convergence (||new_centroids − old_centroids|| < ε). The best "
+        "configuration across all evaluation environments was voxel size = 0.2 m "
+        "with SOR threshold k = 1.5, achieving a Silhouette score of 0.70, "
+        "Davies–Bouldin index of 0.50, and Calinski–Harabasz index of 60 — "
+        "representing the lowest computation time (0.05 s per frame) of all "
+        "evaluated clustering approaches (Table 5.7 in Section 5.10)."
     ))
 
     doc.add_heading("Centroid and Extremity Estimation for Navigational Awareness", level=3)
     add_rich_para(doc, (
-        "For each valid cluster, two key spatial estimates are computed: "
-        "the **centroid** (arithmetic mean of all member point positions), "
-        "representing the obstacle's spatial centre; and the **nearest extremity** "
-        "(the cluster point closest to the USV), representing the collision-relevant "
-        "surface of the obstacle. The centroid is used for obstacle tracking and "
-        "georeferencing, whilst the nearest extremity determines the safe standoff "
-        "distance used by the GNC avoidance planner. Empirical analysis demonstrated "
-        "that the extremity-based estimate consistently provided earlier collision "
-        "warnings than centroid-based estimates for large or elongated obstacles."
+        "For each valid cluster, M-ACF Net computes two navigational estimates: "
+        "the **centroid** (arithmetic mean of all cluster point positions), "
+        "representing the obstacle's geometric centre; and the **principal component "
+        "extremity** — the cluster point with the highest absolute value along the "
+        "first principal component (PC1), representing the closest physical surface "
+        "of the obstacle to the USV along its dominant axis. Both estimates are "
+        "transmitted to the GNC system via the obstacle communication message. "
+        "The extremity-based estimate is used to compute the safe standoff "
+        "margin for avoidance manoeuvres, as it consistently provides earlier and "
+        "more conservative collision warnings than the centroid estimate for elongated "
+        "or large obstacles."
     ))
     add_figure_placeholder(
         doc,
@@ -973,49 +1093,51 @@ def _ch5_clustering(doc: Document) -> None:
 
 def _ch5_dataset(doc: Document) -> None:
     add_rich_para(doc, (
-        "A dedicated multi-modal, multi-environment dataset was collected to support "
-        "training and evaluation of M-ACF Net. Data collection was conducted aboard the "
-        "Suraya Riptide across multiple near-shore test environments in Malaysia, "
-        "specifically chosen to represent the diversity of conditions encountered in "
-        "real operational deployments: open coastal waters, enclosed harbour basins, "
-        "narrow river channels, and marina environments with dense obstacle populations."
+        "A dedicated multi-modal dataset was collected aboard the Suraya Riptide across "
+        "Malaysian near-shore and inland waterways, providing a representative "
+        "distribution of the obstacle categories and environmental conditions "
+        "encountered in real USV operations. The dataset encompasses three primary "
+        "obstacle categories: **boats** (fishing vessels, cargo ships, kayaks) "
+        "constituting 62% of all annotated instances; **structures** (piers, buoys, "
+        "floating barriers) constituting 23%; and **dynamic obstacles** (drifting "
+        "debris, human activity) constituting the remaining 15%."
     ))
 
     doc.add_heading("Multi-Modal, Multi-Environment Dataset Overview", level=3)
     add_rich_para(doc, (
-        "The dataset comprises synchronised recordings from the LiDAR and stereo camera, "
-        "collected across diverse environmental conditions including varying daylight, "
-        "overcast, and dusk illumination; calm and wave-disturbed water surfaces; "
-        "and a wide range of obstacle types (motorised vessels, kayaks, buoys, "
-        "pontoons, and fixed structures). Ground-truth obstacle positions were "
-        "established via RTK-GNSS measurements of known target positions in "
-        "controlled trial runs, enabling quantitative evaluation of the ranging "
-        "accuracy of the complete M-ACF Net pipeline."
+        "Data were recorded synchronously from the Velodyne HDL-32E at 10 Hz and the "
+        "ZED 2i stereo camera at 20 Hz, with timestamps aligned to the GNSS PPS signal "
+        "to within ±2 ms. GNSS/INS data were decoded to CSV in the UTM coordinate "
+        "system, providing the georeferenced ground truth for obstacle position "
+        "validation in controlled ranging trials at Taman Tasik Metropolitan "
+        "(a lake environment with fixed reference targets at known RTK-GNSS positions). "
+        "LiDAR data were stored as PCD files; stereo image sequences were saved as "
+        "rectified sequential JPEG folders; all data were packaged in ROS bag format "
+        "for offline playback and annotation."
     ))
     add_word_table(
         doc,
-        "Table 5.2. Summary of the multi-modal dataset collected for M-ACF Net evaluation.",
-        ["Environment", "Conditions", "Obstacle Types", "Modalities"],
+        "Table 5.4. Multi-modal dataset composition: obstacle categories and sensor "
+        "configuration during collection (Velodyne HDL-32E + Stereolabs ZED 2i).",
+        ["Obstacle Category", "Examples", "% of Instances", "Sensor Modalities", "Rate"],
         [
-            ["Open coastal",    "Calm / light waves",      "Vessels, buoys",             "LiDAR + Stereo"],
-            ["Enclosed harbour","Variable lighting",        "Small vessels, pontoons",    "LiDAR + Stereo"],
-            ["River channel",   "Overcast / partial glare","Kayaks, fixed structures",   "LiDAR + Stereo"],
-            ["Marina",          "Dense clutter",            "Multiple mixed types",       "LiDAR + Stereo"],
+            ["Boats",            "Fishing vessels, cargo, kayaks",    "62%",  "LiDAR + Stereo", "10/20 Hz"],
+            ["Structures",       "Piers, buoys, floating barriers",   "23%",  "LiDAR + Stereo", "10/20 Hz"],
+            ["Dynamic obstacles","Drifting debris, human activity",   "15%",  "LiDAR + Stereo", "10/20 Hz"],
         ]
     )
 
     doc.add_heading("Data Collection Procedures and Preprocessing Pipeline", level=3)
     add_rich_para(doc, (
-        "Data collection sequences were recorded at 10 Hz for the LiDAR and 30 FPS for "
-        "the stereo camera, with hardware-triggered synchronisation ensuring temporal "
-        "co-registration to within ±2 ms. All sequences were post-processed to extract "
-        "temporally aligned LiDAR–stereo frame pairs, with invalid frames (due to "
-        "sensor start-up transients or communication dropouts) automatically identified "
-        "and excluded. Bounding box annotations for all obstacle instances were produced "
-        "using a semi-automated annotation pipeline, with manual verification by a "
-        "domain expert. LiDAR point cloud annotations were derived from the camera "
-        "annotations via the extrinsic calibration projection, ensuring label consistency "
-        "across modalities."
+        "All sequences were post-processed to extract temporally aligned LiDAR–stereo "
+        "frame pairs, discarding frames affected by sensor start-up transients or "
+        "communication dropouts. Bounding box annotations for detected obstacle "
+        "instances were produced via a semi-automated pipeline: camera-frame 2D "
+        "bounding boxes were annotated by domain experts, and 3D LiDAR annotations "
+        "were derived automatically via the extrinsic calibration projection, ensuring "
+        "label consistency across modalities. The annotation format is compatible with "
+        "both 2D (YOLO) and 3D (KITTI) evaluation protocols, enabling benchmarking "
+        "against both 2D detection and 3D localisation baselines."
     ))
 
 
@@ -1054,213 +1176,331 @@ def _ch5_gnc(doc: Document) -> None:
 
     doc.add_heading("Guidance, Navigation, and Obstacle Avoidance Behaviours", level=3)
     add_rich_para(doc, (
-        "The global planner manages mission-level trajectory planning, generating a "
-        "sequence of waypoints defining the vessel's intended route. The local planner "
-        "implements a reactive adaptation layer that continuously monitors the obstacle "
-        "map maintained by M-ACF Net and modifies the vessel's immediate trajectory "
-        "to maintain safe clearance from all detected obstacles, subject to the "
-        "International Regulations for Preventing Collisions at Sea (COLREGs)."
+        "Detected obstacles are transmitted from the M-ACF Net perception node to the "
+        "GNC system via a UDP client-server communication link using a custom "
+        "NMEA-compliant obstacle message format:"
+    ))
+    p_code = doc.add_paragraph()
+    p_code.paragraph_format.left_indent = Inches(0.4)
+    p_code.paragraph_format.space_before = Pt(4)
+    p_code.paragraph_format.space_after  = Pt(6)
+    r_code = p_code.add_run(
+        "$ODOBJ,<TOD>,<CIO>,<id>,<x>,<y>,<z>,<W>,<H>,<L>,<D>*<cc>CRLF"
+    )
+    r_code.font.name = "Courier New"
+    r_code.font.size = Pt(9)
+    add_rich_para(doc, (
+        "where TOD = total objects detected; CIO = current object index; "
+        "id = object tracking identifier; x, y, z = obstacle coordinates in metres; "
+        "W, H, L = obstacle width, height, and length; D = distance from sensor; "
+        "cc = XOR checksum. The message format extends the VIP protocol used in the "
+        "ESA system (Chapter 4) by adding the z-coordinate for full 3D obstacle "
+        "position reporting, enabling the GNC system to reason about obstacle "
+        "elevation and cross-validate LiDAR and stereo height estimates."
     ))
     add_rich_para(doc, (
-        "The **obstacle avoidance behaviour** is triggered when a detected obstacle "
-        "enters the vessel's alert zone — a configurable standoff radius around the "
-        "vessel derived from its current speed and the worst-case braking distance. "
-        "Upon trigger, the local planner computes an avoidance heading that clears "
-        "the obstacle by a minimum safe margin, whilst the obstacle manager continues "
-        "to track the obstacle's position and updates the avoidance trajectory "
-        "at each perception cycle until the obstacle exits the alert zone."
+        "Obstacle coordinates are transformed from the sensor frame to the GNC "
+        "navigation frame using a geodetic conversion that references all obstacle "
+        "positions relative to a fixed mission-start georeferenced origin "
+        "(λ_ref, φ_ref, A_ref):"
+    ))
+    add_equation(doc, r"\begin{pmatrix}x \\ y \\ z\end{pmatrix} = \begin{pmatrix}k(\lambda - \lambda_{\mathrm{ref}})\cos\phi \\ k(\phi - \phi_{\mathrm{ref}}) \\ A - A_{\mathrm{ref}}\end{pmatrix} \tag{5.20}")
+    add_rich_para(doc, (
+        "where k ≈ 111,320 m/° is the standard geodetic conversion factor. "
+        "Magnetic heading is corrected to true heading by applying the local "
+        "magnetic variation Δ_m supplied by the compass: θ_true = θ_magnetic + Δ_m. "
+        "The global planner manages waypoint-following trajectories; the local planner "
+        "implements reactive avoidance using a Closest Point of Approach (CPA) "
+        "objective function to identify heading–speed combinations that maintain "
+        "safe clearance from all reported obstacles under COLREGs constraints."
     ))
 
 
 def _ch5_results(doc: Document) -> None:
-    doc.add_heading("Data Preprocessing and Feature Extraction Performance", level=3)
+    doc.add_heading("LiDAR Preprocessing and Stereo Feature Extraction Performance", level=3)
     add_rich_para(doc, (
-        "LiDAR preprocessing (voxel downsampling at 0.1 m leaf size, SOR noise removal, "
-        "and FOV filtering) reduced mean cloud density from approximately 65,000 points "
-        "per frame (raw) to 8,200 points per frame (processed), achieving a processing "
-        "latency of 18 ms per frame on the onboard computing hardware. Stereo disparity "
-        "estimation was performed at 30 FPS with an average latency of 33 ms per frame. "
-        "The left-right consistency occlusion handling module identified and masked an "
-        "average of 12.4% of pixels as unreliable per frame, primarily concentrated "
-        "at obstacle boundaries and the water-surface interface."
+        "LiDAR preprocessing (voxel downsampling at 0.2 m, SOR with k = 1.5, "
+        "and FOV filtering) achieved an F1-score of **0.85** on the evaluation "
+        "dataset, reducing mean cloud density by 8.0% whilst preserving the "
+        "geometric structure of maritime obstacles. Stereo disparity estimation "
+        "and Pseudo-LiDAR generation executed at **9.8 ± 1.3 ms per frame** "
+        "on the NVIDIA Jetson Orin NX — corresponding to a potential throughput "
+        "of 102 FPS, substantially faster than the 20 Hz LiDAR acquisition rate "
+        "and ensuring that stereo processing is never the pipeline bottleneck. "
+        "The complete M-ACF Net system operates at **18–25 FPS** end-to-end, "
+        "well within the real-time constraint of <100 ms per frame defined for "
+        "USV navigation."
     ))
     add_figure_placeholder(
         doc,
         "FIGURE 5.8",
-        "Bar chart or timeline showing per-stage processing latency (preprocessing, "
-        "feature extraction, fusion, clustering, GNC transmission). Source: Authors.",
-        "Figure 5.8. Per-stage processing latency of the M-ACF Net pipeline, "
-        "illustrating the computational budget allocation across LiDAR preprocessing, "
-        "stereo feature extraction, fusion, and clustering stages."
+        "Bar chart showing per-stage processing latency (LiDAR preprocessing, "
+        "stereo disparity, pseudo-LiDAR, confidence fusion, PCA-KMeans, GNC "
+        "transmission) on the NVIDIA Jetson Orin NX. Source: Authors.",
+        "Figure 5.8. M-ACF Net per-stage processing latency on the NVIDIA Jetson "
+        "Orin NX, demonstrating end-to-end throughput of 18–25 FPS "
+        "(stereo branch: 9.8 ± 1.3 ms; total pipeline: <55 ms under calm conditions)."
     )
 
     doc.add_heading("Fusion Performance: Quantitative Analysis", level=3)
     add_rich_para(doc, (
-        "The confidence-weighted fusion mechanism was evaluated by comparing fused "
-        "detection accuracy against single-modality baselines (LiDAR-only and "
-        "stereo-only) across the annotated multi-environment dataset. The fused "
-        "M-ACF Net system achieved a mean Average Precision at IoU threshold 0.5 "
-        "(mAP@0.5) of **[see thesis Table 4.3 for precise values]** across all "
-        "obstacle classes, representing a statistically significant improvement over "
-        "both LiDAR-only and stereo-only baselines."
+        "Fusion performance was evaluated by comparing depth estimation RMSE and "
+        "outlier reduction against raw (unweighted) sensor inputs and four "
+        "alternative fusion baselines across five maritime environmental conditions. "
+        "Table 5.5 summarises the results."
     ))
     add_word_table(
         doc,
-        "Table 5.3. Detection performance comparison: LiDAR-only, stereo-only, "
-        "and M-ACF Net mid-level fusion across evaluation environments.",
-        ["Configuration", "Precision", "Recall", "F1", "mAP@0.5"],
+        "Table 5.5. Mid-level fusion performance: RMSE and outlier reduction under "
+        "five maritime environmental conditions (M-ACF Net vs. raw sensor input).",
+        ["Condition", "RMSE Raw (m)", "RMSE Fused (m)", "Outlier Reduction (%)", "Process Time (ms)"],
         [
-            ["LiDAR-only",          "—", "—", "—", "—  [thesis Table 4.3]"],
-            ["Stereo-only (YOLOv8)","—", "—", "—", "—  [thesis Table 4.3]"],
-            ["M-ACF Net (fused)",   "—", "—", "—", "—  [thesis Table 4.3]"],
+            ["Calm Waters",       "1.2 ± 0.3", "0.6 ± 0.1", "72.5", "45"],
+            ["Choppy Waters",     "2.1 ± 0.5", "1.0 ± 0.2", "65.8", "52"],
+            ["Rainy Weather",     "3.5 ± 0.8", "1.8 ± 0.4", "58.3", "63"],
+            ["Fog / Low Vis.",    "4.0 ± 1.0", "2.2 ± 0.5", "55.0", "68"],
+            ["High-Traffic",      "4.5 ± 1.2", "2.5 ± 0.6", "50.0", "70"],
         ]
     )
     add_rich_para(doc, (
-        "The confidence-weighted fusion was particularly effective under challenging "
-        "environmental conditions: in scenes with specular water surface reflections "
-        "(which degrade stereo reliability), the fusion mechanism automatically "
-        "up-weighted LiDAR features; in low-point-density regions at extended ranges "
-        "(which degrade LiDAR feature quality), the stereo branch was weighted more "
-        "heavily. This dynamic adaptation was quantified by measuring the Pearson "
-        "correlation between the computed sensor confidence scores and independently "
-        "measured single-sensor detection errors, confirming that the confidence "
-        "estimates reliably tracked per-modality reliability across diverse conditions."
-    ))
-
-    doc.add_heading("Clustering and Localisation Validation", level=3)
-    add_rich_para(doc, (
-        "The PCA–K-Means clustering stage was evaluated on its ability to correctly "
-        "segment individual obstacles and accurately estimate their 3D positions "
-        "relative to the USV. Ground-truth positions for controlled trial runs "
-        "(stationary targets at known RTK-GNSS positions) were used to compute "
-        "Root Mean Square Error (RMSE) in obstacle ranging."
+        "Under calm water conditions — the most favourable operating environment — "
+        "M-ACF Net reduced depth RMSE from 1.2 m (raw) to 0.6 m (fused), a "
+        "50% improvement attributable to the adaptive confidence mechanism correctly "
+        "prioritising LiDAR features (high C_LiDAR) whilst suppressing near-surface "
+        "stereo noise. As environmental severity increased, RMSE degraded gradually "
+        "rather than catastrophically: under fog and low visibility (the most "
+        "demanding condition), fused RMSE of 2.2 m at 68 ms/frame remained "
+        "within the real-time constraint. Table 5.6 places these results in "
+        "the context of alternative fusion approaches."
     ))
     add_word_table(
         doc,
-        "Table 5.4. Obstacle ranging accuracy: PCA–K-Means clustering vs. "
-        "standard Euclidean clustering across tested range bands.",
-        ["Range Band", "Standard Euclidean RMSE (m)", "PCA–K-Means RMSE (m)", "Improvement"],
+        "Table 5.6. Comparative fusion performance: M-ACF Net vs. alternative "
+        "methods (RMSE in calm and stormy conditions; processing time on Jetson Orin NX).",
+        ["Method", "RMSE Calm (m)", "RMSE Stormy (m)", "Process Time (ms)"],
         [
-            ["1–5 m",   "—  [thesis Table 4.5]", "—  [thesis Table 4.5]", "—"],
-            ["5–10 m",  "—  [thesis Table 4.5]", "—  [thesis Table 4.5]", "—"],
-            ["10–20 m", "—  [thesis Table 4.5]", "—  [thesis Table 4.5]", "—"],
+            ["**M-ACF Net (proposed)**", "**0.6 ± 0.1**", "**1.8 ± 0.4**", "**45–63**"],
+            ["Median Filtering",          "1.0 ± 0.2",     "2.5 ± 0.6",     "30–40"],
+            ["U-Net (LiDAR)",             "0.7 ± 0.2",     "2.0 ± 0.5",     "120–150"],
+            ["ResNet-50 Fusion",          "0.8 ± 0.3",     "2.2 ± 0.6",     "90–110"],
+            ["Vision Transformer",        "0.9 ± 0.3",     "2.4 ± 0.7",     "200–250"],
         ]
     )
     add_rich_para(doc, (
-        "The PCA–K-Means approach consistently outperformed standard Euclidean "
-        "clustering for elongated maritime obstacles (vessels, pontoons), where "
-        "orientation alignment prior to clustering prevented the erroneous splitting "
-        "of a single elongated obstacle into multiple smaller clusters — a failure "
-        "mode routinely observed with spherically-symmetric distance-based clustering "
-        "on maritime point cloud data."
-    ))
-
-    doc.add_heading("System-Level 3D Object Detection Benchmarking", level=3)
-    add_rich_para(doc, (
-        "The complete M-ACF Net pipeline was benchmarked against alternative 3D detection "
-        "approaches from the literature on the multi-modal maritime dataset. Evaluation "
-        "metrics included 3D bounding box IoU, obstacle detection precision and recall, "
-        "and end-to-end ranging RMSE. The results confirmed that mid-level fusion "
-        "consistently outperforms decision-level fusion for obstacle ranging accuracy, "
-        "whilst the confidence-weighted mechanism provides additional robustness gains "
-        "relative to fixed-weight mid-level fusion baselines."
+        "M-ACF Net achieves the lowest RMSE in both calm (0.6 m) and stormy (1.8 m) "
+        "conditions — outperforming even U-Net and ResNet-50 fusion baselines "
+        "that incorporate learned feature combination — whilst operating in 45–63 ms, "
+        "compared with 90–250 ms for the deep-learning fusion baselines. This "
+        "demonstrates that the confidence-weighted mechanism provides accuracy "
+        "gains through principled adaptive weighting rather than additional "
+        "computational depth."
     ))
     add_figure_placeholder(
         doc,
         "FIGURE 5.9",
-        "Bar chart comparing M-ACF Net against LiDAR-only, stereo-only, and "
-        "decision-level fusion baselines on mAP@0.5 and ranging RMSE. Source: Authors.",
-        "Figure 5.9. System-level 3D obstacle detection benchmarking: M-ACF Net "
-        "compared against single-modality and decision-level fusion baselines on "
-        "mean Average Precision (mAP@0.5) and ranging RMSE."
+        "Grouped bar chart comparing RMSE (calm/stormy) and processing time for "
+        "M-ACF Net vs. four fusion baselines from Table 5.6. Source: Authors.",
+        "Figure 5.9. Fusion performance comparison: M-ACF Net achieves lowest RMSE "
+        "in both calm (0.6 m) and stormy (1.8 m) conditions while remaining within "
+        "the real-time processing budget (45–63 ms), unlike deep-learning baselines "
+        "requiring 90–250 ms."
+    )
+
+    doc.add_heading("Clustering and Localisation Validation", level=3)
+    add_rich_para(doc, (
+        "PCA–K-Means clustering performance was assessed using three internal "
+        "cluster quality metrics — Silhouette score, Davies–Bouldin (DB) index, "
+        "and Calinski–Harabasz (CH) index — as well as distance estimation accuracy "
+        "(RMSE, MAE, and R²) against RTK-GNSS ground-truth obstacle positions. "
+        "Table 5.7 compares M-ACF Net clustering against four established algorithms."
+    ))
+    add_word_table(
+        doc,
+        "Table 5.7. Clustering quality and computation time: M-ACF Net PCA–K-Means "
+        "vs. alternative clustering algorithms (higher Silhouette and CH are better; "
+        "lower DB and time are better).",
+        ["Algorithm", "Silhouette ↑", "Davies–Bouldin ↓", "Calinski–Harabasz ↑", "Time (s) ↓"],
+        [
+            ["**M-ACF Net (proposed)**", "**0.70**", "**0.50**", "60",  "**0.05**"],
+            ["DBSCAN",                   "0.75",      "0.60",     "80",  "0.12"],
+            ["Hierarchical",             "0.70",      "0.70",     "50",  "0.25"],
+            ["Spectral Clustering",      "0.80",      "0.55",     "90",  "0.30"],
+            ["GMMs",                     "0.75",      "0.58",     "70",  "0.20"],
+        ]
+    )
+    add_rich_para(doc, (
+        "The M-ACF Net clustering configuration achieves the lowest computation time "
+        "(0.05 s — four times faster than DBSCAN and six times faster than spectral "
+        "clustering), with competitive Silhouette and Davies–Bouldin scores. "
+        "The relatively lower CH index (60 vs. spectral clustering's 90) reflects "
+        "the PCA–K-Means preference for a small number of well-separated clusters "
+        "consistent with the maritime obstacle distribution, rather than maximising "
+        "inter-cluster spread at the expense of intra-cluster coherence."
+    ))
+    add_word_table(
+        doc,
+        "Table 5.8. Obstacle distance estimation accuracy: M-ACF Net vs. alternative "
+        "clustering algorithms (ground truth from RTK-GNSS ranging trials at "
+        "Taman Tasik Metropolitan).",
+        ["Algorithm", "RMSE (m) ↓", "MAE (m) ↓", "R² ↑"],
+        [
+            ["**M-ACF Net (proposed)**", "**1.6**", "**1.2**", "**0.88**"],
+            ["DBSCAN",                   "2.0",      "1.6",     "0.80"],
+            ["Hierarchical",             "2.8",      "2.2",     "0.70"],
+            ["Spectral Clustering",      "1.8",      "1.4",     "0.85"],
+            ["GMMs",                     "2.1",      "1.7",     "0.78"],
+        ]
+    )
+    add_rich_para(doc, (
+        "M-ACF Net achieves the best distance estimation accuracy: RMSE = 1.6 m, "
+        "MAE = 1.2 m, and R² = 0.88. The R² score of 0.88 indicates that "
+        "88% of the variance in ground-truth obstacle ranges is captured by the "
+        "M-ACF Net range estimate, confirming strong linear correspondence between "
+        "estimated and true obstacle positions across the tested range (0–15 m). "
+        "The superiority of PCA–K-Means over DBSCAN (RMSE 2.0 m) and hierarchical "
+        "clustering (RMSE 2.8 m) is particularly pronounced for elongated obstacles "
+        "such as vessels and pontoons, where orientation alignment prior to clustering "
+        "prevents the erroneous splitting of a single obstacle into multiple smaller "
+        "clusters — a systematic failure mode of density-based and hierarchical "
+        "approaches on maritime point cloud data."
+    ))
+
+    doc.add_heading("System-Level 3D Object Detection Benchmarking", level=3)
+    add_rich_para(doc, (
+        "The complete M-ACF Net pipeline was benchmarked against five 3D detection "
+        "baselines — YOLOv8-Stereo, PointPillars, Pseudo-LiDAR, Frustum PointNet, "
+        "and DSGN — on the custom maritime dataset, using 3D Average Precision (AP) "
+        "at IoU thresholds of 50% (ships) and 40% (buoys, bridges) across Easy, "
+        "Moderate, and Hard difficulty splits (Table 5.9)."
+    ))
+    add_word_table(
+        doc,
+        "Table 5.9. 3D Average Precision (%) by difficulty level for three maritime "
+        "obstacle categories (IoU: 50% ships; 40% buoys/bridges; "
+        "platform: NVIDIA Jetson Orin NX).",
+        ["Method", "Ship Easy", "Ship Mod.", "Ship Hard",
+         "Buoys Easy", "Buoys Mod.", "Buoys Hard",
+         "Bridge Easy", "Bridge Mod.", "Bridge Hard", "FPS"],
+        [
+            ["YOLOv8-Stereo",   "68.2", "55.1", "42.3", "50.1", "40.2", "30.5", "45.3", "35.6", "25.8", "25"],
+            ["PointPillars",     "72.5", "60.8", "48.6", "55.7", "45.3", "33.2", "50.2", "40.1", "28.4", "18"],
+            ["Pseudo-LiDAR",    "75.1", "63.4", "50.2", "58.9", "47.1", "35.0", "52.4", "42.3", "30.1", "15"],
+            ["Frustum PointNet","70.8", "58.3", "45.9", "53.2", "43.8", "32.7", "48.6", "38.9", "27.5", "10"],
+            ["DSGN",            "77.3", "65.0", "52.4", "60.5", "49.8", "37.6", "54.7", "44.5", "32.9", "20"],
+            ["**M-ACF Net**",   "**82.6**","**70.8**","**58.3**","**65.2**","**53.4**","**41.7**","**59.8**","**48.9**","**36.5**","18"],
+        ]
+    )
+    add_rich_para(doc, (
+        "M-ACF Net achieves the highest 3D AP across all three categories and all "
+        "difficulty levels. For ships — the primary obstacle category in USV navigation "
+        "— the system attains 82.6% / 70.8% / 58.3% on Easy / Moderate / Hard splits, "
+        "compared with 77.3% / 65.0% / 52.4% for the best single-method baseline (DSGN). "
+        "The absolute improvement is most pronounced on the Hard difficulty split "
+        "(ships: +5.9 pp; buoys: +4.1 pp; bridges: +3.6 pp) — precisely the scenario "
+        "of greatest operational relevance, where targets are small, distant, or "
+        "partially occluded. M-ACF Net achieves these gains at 18 FPS, matching "
+        "PointPillars throughput and far exceeding the 10 FPS of Frustum PointNet, "
+        "confirming the suitability of the confidence-weighted mid-level fusion "
+        "architecture for real-time edge deployment."
+    ))
+    add_figure_placeholder(
+        doc,
+        "FIGURE 5.9",
+        "Grouped bar chart comparing 3D AP for M-ACF Net vs. five baselines across "
+        "Ship / Buoys / Bridge categories at Easy, Mod., Hard difficulty. "
+        "Source: Authors.",
+        "Figure 5.9. 3D object detection benchmark: M-ACF Net achieves highest AP "
+        "across all three maritime obstacle categories and difficulty levels, with the "
+        "largest margin on Hard-difficulty targets (5.9 pp over nearest baseline for ships)."
     )
 
     doc.add_heading("Real-World Navigation and Obstacle Avoidance Trials", level=3)
     add_rich_para(doc, (
-        "Comprehensive real-world validation trials were conducted at multiple near-shore "
-        "test sites in Malaysia, using the Suraya Riptide operating under autonomous "
-        "control with M-ACF Net providing the situational awareness input to the GNC "
-        "system. Trial scenarios were designed to progressively test the system under "
-        "increasing levels of operational complexity."
+        "Four obstacle avoidance scenarios were executed with the Suraya Riptide "
+        "operating under full M-ACF Net autonomous control in Malaysian waterways. "
+        "Scenarios were designed to span the principal COLREGs encounter types: "
+        "head-on (Scenario 1 and 3), crossing (Scenario 2), and stationary-obstacle "
+        "(Scenario 4). In all four scenarios, the system achieved zero collisions. "
+        "Table 5.10 summarises the key performance metrics."
+    ))
+    add_word_table(
+        doc,
+        "Table 5.10. Autonomous obstacle avoidance trial results across four "
+        "COLREGs encounter scenarios (all scenarios: zero collisions).",
+        ["Scenario", "Encounter Type", "Detection Range (m)", "Detection Time (s)",
+         "Reaction Time (s)", "Path Deviation (m)", "Min. CPA (m)"],
+        [
+            ["1 — Dynamic head-on",      "Head-on (oncoming)",      "8.0",  "1.5", "1.2", "9.0",  "5.0  (3.3× vessel length)"],
+            ["2 — Crossing (Rule 15)",   "Crossing, stand-on USV",  "10.0", "2.0", "1.5", "6.5",  "7.0"],
+            ["3 — Turning into obstacle","Head-on (converging)",     "8.0",  "1.3", "1.0", "12.0", "6.5"],
+            ["4 — Fixed structure",      "Stationary pier",         "15.0", "1.0", "0.8", "15.2", "10.0"],
+        ]
+    )
+    add_rich_para(doc, (
+        "Detection ranges varied from 8.0 m (head-on dynamic obstacle) to 15.0 m "
+        "(fixed pier), consistent with the system's maximum effective perception "
+        "range of approximately 15 m on the Suraya Riptide platform. "
+        "Reaction times — measured from the first successful M-ACF Net detection "
+        "to the initiation of a GNC avoidance manoeuvre — were consistently within "
+        "0.8 to 1.5 seconds across all scenarios. Path deviations ranged from 6.5 m "
+        "(crossing, Rule 15) to 15.2 m (fixed structure), reflecting the larger "
+        "standoff required for stationary obstacles where early detection at 15 m "
+        "allowed a gradual rerouting with a 2.0 m turning radius."
     ))
     add_rich_para(doc, (
-        "**Scenario 1 — Static obstacle avoidance.** The Riptide navigated a "
-        "pre-planned waypoint route with a stationary obstacle (a moored boat) "
-        "positioned on the planned path. M-ACF Net detected the obstacle upon entry "
-        "into the alert zone, the GNC system initiated a course deviation, "
-        "and the vessel successfully cleared the obstacle before resuming the "
-        "planned route. Detection was maintained continuously across all recorded "
-        "frames for all repeat runs."
-    ))
-    add_rich_para(doc, (
-        "**Scenario 2 — Dynamic obstacle (crossing situation).** A motorised vessel "
-        "crossed the Riptide's path at a perpendicular angle. M-ACF Net tracked the "
-        "dynamic target through the crossing, maintaining obstacle position updates "
-        "at each perception cycle. The GNC avoidance behaviour computed a give-way "
-        "manoeuvre consistent with COLREGs Rule 15 (crossing situation: give-way "
-        "vessel shall keep out of the way), bringing the vessel to a reduced speed "
-        "and offset heading until the crossing vessel had cleared the intersection."
-    ))
-    add_rich_para(doc, (
-        "**Scenario 3 — Multi-obstacle dense environment.** The Riptide navigated "
-        "through a marina environment with multiple stationary and slow-moving "
-        "obstacles simultaneously within the alert zone. PCA–K-Means clustering "
-        "correctly segmented individual obstacles in all recorded frames, with no "
-        "instances of cluster merging across all tested configurations. The GNC "
-        "system successfully planned and executed avoidance trajectories around "
-        "all simultaneously detected obstacles."
+        "Autonomous path-following performance — evaluated independently using "
+        "cross-track error (CTE) over straight-line and curved waypoint sequences "
+        "— demonstrated typical CTE values below **0.5 m** on straight-line segments "
+        "and generally below **2.0 m** through waypoint transitions. CTE peaks "
+        "approaching 2.0 m were observed at sharp heading changes, consistent with "
+        "the turning radius limitations of the Riptide's propulsion configuration "
+        "at the trial speed (approximately 0.5–1.0 m/s)."
     ))
     add_figure_placeholder(
         doc,
         "FIGURE 5.10",
-        "Navigation trial screenshots: top-down trajectory plots for Scenarios 1–3, "
-        "overlaid with obstacle detections, alert zones, and avoidance trajectories. "
-        "Source: Authors.",
-        "Figure 5.10. Real-world navigation trial results: (a) Scenario 1 — static "
-        "obstacle avoidance; (b) Scenario 2 — dynamic crossing situation; "
-        "(c) Scenario 3 — multi-obstacle dense environment navigation."
-    )
-    add_word_table(
-        doc,
-        "Table 5.5. Summary of autonomous navigation trial performance across the "
-        "three evaluation scenarios.",
-        ["Scenario", "Obstacle Type", "Detection Rate", "Avoidance Success", "Runs"],
-        [
-            ["1 — Static",   "Moored vessel",    "100%", "100%", "—  [thesis Table 4.6]"],
-            ["2 — Dynamic",  "Crossing vessel",  "—",    "—",    "—  [thesis Table 4.6]"],
-            ["3 — Multi",    "Mixed / marina",   "—",    "—",    "—  [thesis Table 4.6]"],
-        ]
+        "Top-down GPS trajectory plots for Scenarios 1–4, showing USV path (solid), "
+        "planned route (dashed), M-ACF Net obstacle detections (coloured markers), "
+        "and avoidance manoeuvre trajectories. Source: Authors.",
+        "Figure 5.10. Autonomous navigation trial results: GPS-logged USV trajectories "
+        "for all four obstacle avoidance scenarios, overlaid with M-ACF Net obstacle "
+        "detection events and GNC avoidance responses (zero collisions across all runs)."
     )
 
 
 def _ch5_summary(doc: Document) -> None:
     add_rich_para(doc, (
         "This chapter has presented M-ACF Net, a mid-level LiDAR–stereo fusion "
-        "framework for geospatial obstacle awareness in near-shore Unmanned Surface "
-        "Vehicle navigation. Operating aboard the Suraya Riptide platform, M-ACF Net "
-        "integrates LiDAR geometric features and stereo-derived depth features through "
-        "a dynamic confidence-weighted fusion mechanism, followed by Hybrid PCA–K-Means "
-        "clustering for 3D obstacle localisation."
+        "framework for geospatial obstacle awareness in near-shore USV navigation, "
+        "developed and validated aboard the Suraya Riptide trimaran at IIUM CUTe. "
+        "The system integrates the Velodyne HDL-32E LiDAR and Stereolabs ZED 2i "
+        "stereo camera through a dynamic confidence-weighted fusion mechanism, "
+        "followed by Hybrid PCA–K-Means clustering and full GNC integration, "
+        "all executed in real-time on the NVIDIA Jetson Orin NX at 18–25 FPS."
     ))
     add_rich_para(doc, (
         "The principal technical contributions are fourfold. "
-        "First, the **confidence-weighted mid-level fusion mechanism** dynamically "
-        "adjusts per-modality feature contributions based on per-frame reliability "
-        "estimates, achieving robustness to the complementary failure modes of LiDAR "
-        "(sparsity at range, small-target misses) and stereo cameras (disparity errors "
-        "under reflections and textureless surfaces). "
-        "Second, the **Pseudo-LiDAR generation pipeline** converts stereo-derived "
-        "disparity maps into 3D point representations compatible with LiDAR feature "
-        "processing modules, enabling tight mid-level integration without requiring "
-        "specialised multimodal network architectures. "
-        "Third, the **Hybrid PCA–K-Means clustering** stage performs orientation-aware "
-        "obstacle segmentation that outperforms standard Euclidean clustering for "
-        "elongated maritime obstacles, providing more accurate centroid and extremity "
-        "estimates for downstream GNC avoidance planning. "
-        "Fourth, the **complete GNC integration** — validated across multiple real-world "
-        "near-shore scenarios — demonstrates that M-ACF Net provides the perception "
-        "quality required for fully autonomous USV navigation in complex, cluttered "
-        "maritime environments."
+        "First, the **confidence-weighted mid-level fusion mechanism** (Equations "
+        "5.10–5.14) dynamically adjusts per-modality feature weights based on "
+        "per-frame LiDAR density and stereo occlusion reliability estimates, "
+        "reducing depth RMSE by 50% in calm conditions (1.2 → 0.6 m) and "
+        "outperforming all alternative fusion baselines whilst remaining within "
+        "the 100 ms real-time processing budget. "
+        "Second, the **Pseudo-LiDAR generation pipeline** (Equations 5.3–5.9) "
+        "converts deep-learning-based stereo disparity maps into geometrically "
+        "compatible 3D point representations using the ZED 2i's 65 mm baseline "
+        "and calibrated intrinsics, enabling tight mid-level integration at "
+        "9.8 ± 1.3 ms/frame. "
+        "Third, the **Hybrid PCA–K-Means clustering** stage achieves the best "
+        "distance estimation accuracy across all tested algorithms "
+        "(RMSE 1.6 m, MAE 1.2 m, R² = 0.88) at the lowest computation time "
+        "(0.05 s/frame), with orientation-aware segmentation that correctly handles "
+        "elongated maritime obstacles where density-based clustering fails. "
+        "Fourth, the **3D detection and GNC integration** — achieving 82.6% AP "
+        "(Ship Easy), 70.8% (Ship Moderate), and 58.3% (Ship Hard), with zero "
+        "collisions across four COLREGs encounter scenarios — demonstrates that "
+        "M-ACF Net provides the perception quality and responsiveness required for "
+        "fully autonomous USV navigation in complex near-shore environments."
     ))
     add_rich_para(doc, (
         "Comparison with the decision-level fusion approach presented in Chapter 4 "

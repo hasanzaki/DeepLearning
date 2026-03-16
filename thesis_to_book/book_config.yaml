@@ -1,0 +1,242 @@
+# ============================================================
+# IIUM Press Research Book — Production Configuration
+# "Autonomous Navigation and Situational Awareness for
+#  Unmanned Surface Vessels"
+# ============================================================
+
+book:
+  title: "Autonomous Navigation and Situational Awareness for Unmanned Surface Vessels"
+  subtitle: "LiDAR-Camera Sensor Fusion Approaches in Near-Shore Maritime Environments"
+  editors:
+    - "Assoc. Prof. Dr Zulkifli Bin Zainal Abidin"
+    - "Dr Hasan Firdaus Bin Mohd Zaki"
+  institution: "Kulliyyah of Engineering, International Islamic University Malaysia"
+  year: 2026
+  subject_area: "Autonomous maritime navigation, sensor fusion, unmanned surface vehicles"
+  publisher: "IIUM Press"
+  category: "Research Book / Edited Book"
+
+# ----------------------------------------------------------------
+# CHAPTER MAPPING
+# Each entry maps a source thesis (or section of one) to a book
+# chapter. Chapters 1, 6, and 7 are editorial chapters synthesised
+# from both theses and do not map to a single source file.
+# ----------------------------------------------------------------
+theses:
+  # ── Chapter 2: USV Platforms & Near-Shore Challenges ──────────
+  - path: "THESES/G2011387_THESIS_1753402102_25072025_0808_Final formatted thesis12.pdf"
+    author: "Yousef A Y Alhattab and Muhammad Aiman Bin Norazaruddin"
+    original_title: >
+      Merged Literature: USV Development, Navigation Architectures,
+      and Near-Shore Environmental Challenges
+    chapter_title: >
+      Unmanned Surface Vehicles: Platforms, Navigation Architectures,
+      and Near-Shore Operational Challenges
+    chapter_number: 2
+    source_sections:
+      # From Alhattab: Ch.2 USV sections (primary — more comprehensive survey)
+      # From Aiman: Ch.2 USV and environmental challenges sections
+      - "USV background and evolution"
+      - "SURAYA USV family"
+      - "GNC architecture"
+      - "near-shore environmental challenges"
+
+  # ── Chapter 3: Sensors & Fusion Strategies ────────────────────
+  - path: "THESES/Full Thesis Aiman - Rev 02.pdf"
+    author: "Muhammad Aiman Bin Norazaruddin and Yousef A Y Alhattab"
+    original_title: >
+      Merged Literature: Sensor Modalities, Fusion Strategies,
+      Deep Learning for Maritime Perception, and Datasets
+    chapter_title: >
+      Sensor Modalities and Fusion Strategies for Maritime Perception
+    chapter_number: 3
+    source_sections:
+      # From Aiman: LiDAR-stereo fusion literature, deep learning fusion
+      # From Alhattab: Object detection models, datasets (SMD, SeaShips, MFLD)
+      - "LiDAR and stereo camera characteristics"
+      - "fusion taxonomy (early/mid/late)"
+      - "deep learning multimodal perception"
+      - "maritime datasets"
+
+  # ── Chapter 4: Alhattab — ESA with Decision-Level Fusion ──────
+  - path: "THESES/G2011387_THESIS_1753402102_25072025_0808_Final formatted thesis12.pdf"
+    author: "Yousef A Y Alhattab"
+    original_title: >
+      Enhanced Situational Awareness for Unmanned Surface Vehicles
+      Using LiDAR-Camera Fusion with Hybrid KD-Accelerated Spatial
+      Clustering and Supervised Learning
+    chapter_title: >
+      A Practical Navigation System for Enhanced Situational Awareness
+      Using Decision-Level LiDAR-Camera Fusion
+    chapter_number: 4
+    source_sections:
+      - "ESA framework (perception/comprehension/projection)"
+      - "SURAYA system architecture and sensor layers"
+      - "Vision Integration Protocol (VIP) module"
+      - "KD-accelerated Euclidean clustering"
+      - "YOLOv5s object detection and MFLD dataset"
+      - "NMEA reporting and MOOS-IvP integration"
+      - "field test results and collision avoidance scenarios"
+
+  # ── Chapter 5: Aiman — M-ACF Net Mid-Level Fusion ─────────────
+  - path: "THESES/Full Thesis Aiman - Rev 02.pdf"
+    author: "Muhammad Aiman Bin Norazaruddin"
+    original_title: >
+      A Mid-Level LiDAR-Stereo Fusion Framework for Unmanned Surface
+      Vessel Geospatial Awareness in Near-Shore Environments
+    chapter_title: >
+      Mid-Level LiDAR-Stereo Geospatial Feature Fusion with Adaptive
+      Confidence Weighting: The M-ACF Net Framework
+    chapter_number: 5
+    source_sections:
+      - "Suraya Riptide platform and sensor setup"
+      - "M-ACF Net architecture and design rationale"
+      - "pseudo-LiDAR generation and visual feature extraction"
+      - "dynamic confidence weighting mechanism"
+      - "PCA and K-Means clustering for obstacle localisation"
+      - "dataset collection across multi-modal environments"
+      - "results: detection accuracy, ranging RMSE, GNC integration"
+      - "navigation trial outcomes"
+
+# ----------------------------------------------------------------
+# OUTPUT SETTINGS
+# ----------------------------------------------------------------
+output:
+  path: "output/USV_Book_Draft.docx"
+  include_toc: true
+  include_bibliography: true
+  include_index: true
+  include_abstracts: true
+  # Page size: 6×9 inch (IIUM Press standard for research books)
+  page_width_inches: 6.0
+  page_height_inches: 9.0
+  # Margins: 1 inch all sides (IIUM Press requirement)
+  margin_inches: 1.0
+  # IIUM Press formatting
+  font_name: "Times New Roman"
+  body_font_size_pt: 11
+  heading_font_size_pt: 12
+  figure_table_font_size_pt: 10
+  line_spacing_pt: 14   # Single spacing at 11pt ≈ 14pt leading
+  citation_style: "APA 7th Edition"
+  language: "British English"
+
+# ----------------------------------------------------------------
+# AI REWRITING SETTINGS
+# ----------------------------------------------------------------
+ai:
+  model: "claude-opus-4-6"
+
+  # "medium": restructure for book prose, improve transitions,
+  # maintain technical accuracy, remove thesis-style preamble.
+  # Do NOT change any reported numerical result.
+  rewrite_level: "medium"
+
+  style_guide: >
+    This is a research book published by IIUM Press targeted at
+    graduate students, researchers, and engineers working on autonomous
+    maritime systems, USV navigation, and sensor fusion. Write in formal
+    British English academic prose. Use active voice where natural.
+    Refer to the work as "this chapter" not "this thesis". Preserve all
+    quantitative results (accuracy percentages, mAP values, RMSE figures)
+    exactly as stated in the source. Eliminate redundant methodology detail
+    — describe WHAT was done and WHY, not step-by-step HOW. Keep headings
+    to three levels maximum. Reduce direct quotations; paraphrase with
+    citation instead. Remove any language that is specific to thesis
+    submission requirements (e.g., "to fulfil the requirements of...").
+    Open each chapter with a clear statement of its contribution to the
+    broader book theme of autonomous USV navigation.
+
+# ----------------------------------------------------------------
+# EDITORIAL CHAPTERS (not extracted from a thesis PDF)
+# These must be written manually by the editor.
+# The pipeline will generate placeholder text for them.
+# ----------------------------------------------------------------
+editorial_chapters:
+  - chapter_number: 1
+    chapter_title: >
+      Introduction: Autonomous Maritime Navigation — Challenges,
+      Opportunities, and Scope
+    description: >
+      Editors write this chapter (~25 pages). Sets the context:
+      global growth of USV applications; near-shore navigation as the
+      hardest problem; sensor fusion as the enabling technology; overview
+      of the two research streams covered in this book (ESA/Alhattab and
+      M-ACF Net/Aiman); guide to book structure and how to read it.
+    contributors:
+      - "Assoc. Prof. Dr Zulkifli Bin Zainal Abidin"
+      - "Dr Hasan Firdaus Bin Mohd Zaki"
+
+  - chapter_number: 6
+    chapter_title: >
+      Comparative Analysis: Decision-Level vs Mid-Level Fusion
+      in Near-Shore USV Navigation
+    description: >
+      Editors write this chapter (~25 pages). Side-by-side technical
+      comparison of the ESA system (Ch. 4) and M-ACF Net (Ch. 5):
+      detection accuracy, computational cost, latency, robustness to
+      environmental conditions (reflections, occlusion, wave motion),
+      ease of deployment, and scalability. Cross-dataset benchmarking.
+      Design guidelines for practitioners selecting a fusion strategy.
+    contributors:
+      - "Assoc. Prof. Dr Zulkifli Bin Zainal Abidin"
+      - "Yousef A Y Alhattab"
+      - "Muhammad Aiman Bin Norazaruddin"
+
+  - chapter_number: 7
+    chapter_title: >
+      Conclusions and Future Directions
+    description: >
+      Summary of the book's contributions; open challenges (lightweight
+      models for resource-constrained USVs, GPS-denied environments,
+      multi-USV cooperative perception, edge AI deployment, larger and
+      more diverse maritime datasets); recommendations for future research.
+    contributors:
+      - "Assoc. Prof. Dr Zulkifli Bin Zainal Abidin"
+
+# ----------------------------------------------------------------
+# PREFACE TEMPLATE (replaces thesis abstracts)
+# ----------------------------------------------------------------
+preface:
+  description: >
+    Converted from both thesis abstracts. Discusses: how this book came
+    about; the shared research vision of the IIUM maritime robotics group;
+    what the reader can expect; acknowledgement of the SURAYA USV platform
+    as the common experimental testbed; dedication to the field of
+    Malaysian maritime technology.
+  word_count_target: 600
+
+# ----------------------------------------------------------------
+# GLOSSARY SEED (key terms to define in back matter)
+# ----------------------------------------------------------------
+glossary_terms:
+  - "Unmanned Surface Vehicle (USV)"
+  - "Enhanced Situational Awareness (ESA)"
+  - "LiDAR (Light Detection and Ranging)"
+  - "Stereo Camera"
+  - "Point Cloud"
+  - "Pseudo-LiDAR"
+  - "M-ACF Net (Maritime Adaptive Confidence Fusion Network)"
+  - "Decision-Level Fusion"
+  - "Mid-Level Fusion"
+  - "Early Fusion"
+  - "GNC (Guidance, Navigation, and Control)"
+  - "GNSS (Global Navigation Satellite System)"
+  - "IMU (Inertial Measurement Unit)"
+  - "PCA (Principal Component Analysis)"
+  - "K-Means Clustering"
+  - "KD-Tree"
+  - "YOLOv5s"
+  - "YOLOv8"
+  - "mAP (Mean Average Precision)"
+  - "RMSE (Root Mean Square Error)"
+  - "VIP (Vision Integration Protocol)"
+  - "MOOS-IvP"
+  - "NMEA"
+  - "SMD (Singapore Maritime Dataset)"
+  - "MFLD (Maritime Fusion LiDAR-Depth dataset)"
+  - "Voxel Downsampling"
+  - "SOR (Statistical Outlier Removal)"
+  - "Euclidean Clustering"
+  - "Bounding Box"
+  - "Disparity Map"
